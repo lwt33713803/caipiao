@@ -27,8 +27,12 @@ export class UsersService {
       { $set: { password: password } },
     );
   }
-  getAll() {
-    return this.usrsModel.find();
+  getAll(page: number, page_size: number) {
+    console.log(page);
+    return this.usrsModel
+      .find()
+      .limit(page_size)
+      .skip((page - 1) * page_size);
   }
 
   getTotals() {

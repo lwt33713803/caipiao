@@ -9,6 +9,7 @@ import {
   Ip,
   Headers,
   Patch,
+  Param,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -43,9 +44,12 @@ export class UsersController {
     return this.usersService.getOneByToken(token);
   }
 
-  @Get('lists')
-  async lists() {
-    const res = await this.usersService.getAll();
+  @Get('lists/:page/:page_size')
+  async lists(
+    @Param('page') page: number,
+    @Param('page_size') page_size: number,
+  ) {
+    const res = await this.usersService.getAll(page, page_size);
     const total = await this.usersService.getTotals();
     return {
       total: total,
