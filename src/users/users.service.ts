@@ -5,6 +5,7 @@ import { Model } from 'mongoose';
 import { UsersInterface } from './interfaces/users.interface';
 import * as crypto from 'crypto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 
 @Injectable()
 export class UsersService {
@@ -17,11 +18,21 @@ export class UsersService {
   }
 
   update(updateUserDto: UpdateUserDto) {
-    return this.usrsModel.create(updateUserDto);
+    return this.usrsModel.updateOne({ _id: updateUserDto._id }, updateUserDto);
   }
 
+  updatePasswordByID(id: string, password: string) {
+    return this.usrsModel.updateOne(
+      { _id: id },
+      { $set: { password: password } },
+    );
+  }
   getAll() {
     return this.usrsModel.find();
+  }
+
+  getTotals() {
+    return this.usrsModel.count();
   }
 
   getUserByName(user: CreateUserDto) {

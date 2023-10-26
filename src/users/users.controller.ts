@@ -8,12 +8,14 @@ import {
   Inject,
   Ip,
   Headers,
+  Patch,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { LogService } from '../log/log.service';
-import { UpdateUserDto } from "./dto/update-user.dto";
+import { UpdateUserDto } from './dto/update-user.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 
 @ApiTags('用户管理接口')
 @Controller('users')
@@ -28,7 +30,7 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
-  @Put()
+  @Patch()
   editUser(@Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(updateUserDto);
   }
@@ -42,10 +44,21 @@ export class UsersController {
   }
 
   @Get('lists')
-  lists() {
-    const res = this.usersService.getAll();
-    console.log(res);
-    return res;
+  async lists() {
+    const res = await this.usersService.getAll();
+    const total = await this.usersService.getTotals();
+    return {
+      total: total,
+      list: res,
+    };
+  }
+
+  @Post('resetPassword')
+  async resetPassword(@Body() resetPassword: ResetPasswordDto) {
+    return this.usersService.updatePasswordByID(
+      resetPassword._id,
+      resetPassword.password,
+    );
   }
 
   @Post('login')
