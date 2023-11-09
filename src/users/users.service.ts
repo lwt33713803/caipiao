@@ -10,9 +10,10 @@ import { ResetPasswordDto } from './dto/reset-password.dto';
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectModel('UsersModel')
-    private readonly usrsModel: Model<UsersInterface>,
+    @InjectModel('UsersModel') private readonly usrsModel: Model<UsersInterface>,
   ) {}
+
+
   create(createUserDto: CreateUserDto) {
     return this.usrsModel.create(createUserDto);
   }

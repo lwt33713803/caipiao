@@ -26,6 +26,7 @@ export class UsersController {
   @Inject(LogService)
   private readonly logService: LogService;
 
+
   @Post()
   register(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
