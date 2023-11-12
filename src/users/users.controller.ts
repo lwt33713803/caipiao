@@ -13,6 +13,7 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
+import { QueryOrderDto } from './dto/query-order.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { LogService } from '../log/log.service';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -26,8 +27,7 @@ export class UsersController {
   @Inject(LogService)
   private readonly logService: LogService;
 
-
-  @Post()
+  @Post('register')
   register(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
@@ -97,5 +97,10 @@ export class UsersController {
     //存储当前token到用户信息
     this.usersService.setTokenToUser(new_token, user.id);
     return { token: new_token };
+  }
+
+  @Post('orderList')
+  async getOrderList(@Body() queryOrderDto: QueryOrderDto) {
+    return this.usersService.orderList(queryOrderDto);
   }
 }
