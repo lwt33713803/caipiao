@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
-import { QueryOrderDto } from './dto/query-order.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UsersInterface } from './interfaces/users.interface';
@@ -59,31 +58,4 @@ export class UsersService {
     });
   }
 
-  orderList(queryOrderDto: QueryOrderDto) {
-    console.log(`QueryOrderDto`, queryOrderDto);
-    // if (type == 0) {
-    //   return {
-    //     type: '未出单',
-    //     data: [],
-    //   };
-    // }
-    // if (type == 1) {
-    //   return {
-    //     type: '未出票',
-    //     data: [],
-    //   };
-    // }
-    // if (type == 2) {
-    //   return {
-    //     type: '合作出票',
-    //     data: [],
-    //   };
-    // }
-    // if (type == 3) {
-    //   return {
-    //     type: '派单未出',
-    //     data: [],
-    //   };
-    // }
-  }
 }

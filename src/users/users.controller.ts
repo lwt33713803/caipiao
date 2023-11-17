@@ -13,7 +13,6 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { QueryOrderDto } from './dto/query-order.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { LogService } from '../log/log.service';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -99,8 +98,5 @@ export class UsersController {
     return { token: new_token };
   }
 
-  @Post('orderList')
-  async getOrderList(@Body() queryOrderDto: QueryOrderDto) {
-    return this.usersService.orderList(queryOrderDto);
-  }
+  
 }

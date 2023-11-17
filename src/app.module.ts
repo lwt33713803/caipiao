@@ -7,6 +7,8 @@ import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 import { CategoryModule } from './category/category.module';
 import { LogModule } from './log/log.module';
 import { UsersModule } from './users/users.module';
+import { OrderModule } from './order/order.module';
+import { ShopsModule } from './shops/shops.module';
 
 
 @Module({
@@ -16,6 +18,8 @@ import { UsersModule } from './users/users.module';
     CategoryModule,
     LogModule,
     UsersModule,
+    OrderModule,
+    ShopsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
