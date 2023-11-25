@@ -85,6 +85,7 @@ export class UsersController {
         'https://cdn.learnku.com//uploads/communities/WtC3cPLHzMbKRSZnagU9.png!/both/44x44',
       email: 'Ronnie@123.com',
       role: ['admin'],
+      shop_id: user.shop_id
     };
   }
 

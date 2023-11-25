@@ -6,5 +6,5 @@ export interface UsersInterface extends Document {
   token: string;
   avatar: string;
   state: string;
-  salt: string;
+  shop_id: string;
 }

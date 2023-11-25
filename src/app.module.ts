@@ -9,6 +9,7 @@ import { LogModule } from './log/log.module';
 import { UsersModule } from './users/users.module';
 import { OrderModule } from './order/order.module';
 import { ShopsModule } from './shops/shops.module';
+import { ClerkModule } from './clerk/clerk.module';
 
 
 @Module({
@@ -20,6 +21,7 @@ import { ShopsModule } from './shops/shops.module';
     UsersModule,
     OrderModule,
     ShopsModule,
+    ClerkModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -10,4 +10,5 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   @IsNotEmpty({ message: '更新失败，请选择账户状态！' })
   state: string;
   avatar?: string;
+  shop_id?: string;
 }
