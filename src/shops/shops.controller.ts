@@ -8,8 +8,11 @@ import {
   Query,
 } from '@nestjs/common';
 import { ShopsService } from './shops.service';
+import { ApiTags } from '@nestjs/swagger';
 import { UpdateShopDto } from './dto/update-shop.dto';
 
+
+@ApiTags('店铺信息')
 @Controller('shops')
 export class ShopsController {
   constructor(private readonly shopsService: ShopsService) {}

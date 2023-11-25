@@ -10,6 +10,7 @@ import { UsersModule } from './users/users.module';
 import { OrderModule } from './order/order.module';
 import { ShopsModule } from './shops/shops.module';
 import { ClerkModule } from './clerk/clerk.module';
+import { PlayerModule } from './player/player.module';
 
 
 @Module({
@@ -22,6 +23,7 @@ import { ClerkModule } from './clerk/clerk.module';
     OrderModule,
     ShopsModule,
     ClerkModule,
+    PlayerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
