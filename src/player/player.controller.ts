@@ -24,8 +24,8 @@ export class PlayerController {
   }
 
   @Get('search')
-  async search() {
-    return await this.playerService.findSearch()
+  async search(@Query('shop_id') shop_id: string, @Query('name') name: string) {
+    return await this.playerService.findSearch(shop_id, name);
   }
 
   @Get('all')
@@ -36,13 +36,9 @@ export class PlayerController {
     return await this.playerService.findAll(shop_id, type);
   }
   @Get('num')
-  async findNum(
-    @Query('shop_id') shop_id: string,
-  ) {
+  async findNum(@Query('shop_id') shop_id: string) {
     return await this.playerService.findNum(shop_id);
   }
-
-
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePlayerDto: UpdatePlayerDto) {

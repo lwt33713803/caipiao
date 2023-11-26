@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
+import { AcceptDto, UpdateOrderDto } from './dto/update-order.dto';
 import { QueryOrderDto } from './dto/query-order.dto';
 import { OrderInterface } from './interfaces/order.interface';
 import { OrderSchema } from './schemas/order.schema';
@@ -23,18 +23,20 @@ export class OrderService {
     return temp;
   }
 
-  async find(status: string, type: string) {
-    let query =
-      type === '0'
-        ? {
-            $and: [{ status }],
-          }
-        : {
-            $and: [{ status }, { type }],
-          };
-    console.log(`query`,query)
-    const temp = await this.orderModel.find(query).exec();
-    return temp;
+  async find(shop_id: string, status: string, type: string, sort: string) {
+    const arr = [
+      { $and: [{ shop_id, status }] },
+      { $and: [{ shop_id, status }, { type }] },
+    ];
+    const sort_arr = [{ deadline: 1 }, { order_time: 1 }, { money: 1 }];
+    let query = type === '0' ? arr[0] : arr[1];
+    return await this.orderModel.find(query).sort(sort_arr[sort]).exec();
+  }
+
+  // 接单
+  async acceptOrder(acceptDto: AcceptDto) {
+    const { _id } = acceptDto;
+    return await this.orderModel.findOneAndUpdate({ _id }, { status: 1 });
   }
 
   update(id: number, updateOrderDto: UpdateOrderDto) {

@@ -16,8 +16,8 @@ export class PlayerService {
     return 'This action adds a new player';
   }
 
-  async findSearch() {
-    
+  async findSearch(shop_id: string, name: string) {
+    return await this.PlayerModel.find({ shop_id, name: { $regex: name } });
   }
 
   async findNum(shop_id: string) {
@@ -30,17 +30,20 @@ export class PlayerService {
     if (all_length > 0) {
       return {
         all_length,
-        star_length: (await this.PlayerModel.find({ shop_id, ...keys.star })).length,
-        audit_length: (await this.PlayerModel.find({ shop_id, ...keys.audit })).length,
-        order_length: (await this.PlayerModel.find({ shop_id, ...keys.order })).length
-      }
-    }else {
+        star_length: (await this.PlayerModel.find({ shop_id, ...keys.star }))
+          .length,
+        audit_length: (await this.PlayerModel.find({ shop_id, ...keys.audit }))
+          .length,
+        order_length: (await this.PlayerModel.find({ shop_id, ...keys.order }))
+          .length,
+      };
+    } else {
       return {
         all_length: 0,
         star_length: 0,
         audit_length: 0,
-        order_length: 0
-      }
+        order_length: 0,
+      };
     }
   }
 
@@ -53,7 +56,6 @@ export class PlayerService {
     if (type === 'all') return await this.PlayerModel.find({ shop_id }).exec();
     return await this.PlayerModel.find({ shop_id, ...keys[type] }).exec();
   }
-
 
   update(id: number, updatePlayerDto: UpdatePlayerDto) {
     return `This action updates a #${id} player`;
