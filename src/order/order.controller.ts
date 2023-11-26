@@ -6,10 +6,11 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
+import { AcceptDto, UpdateOrderDto } from './dto/update-order.dto';
 import { QueryOrderDto } from './dto/query-order.dto';
 
 @Controller('order')
@@ -26,12 +27,14 @@ export class OrderController {
     return this.orderService.findAll();
   }
 
-  @Get(':status/:type')
+  @Get('list')
   findOne(
-    @Param('status') status: string,
-    @Param('type') type: string
+    @Query('shop_id') shop_id: string,
+    @Query('status') status: string,
+    @Query('type') type: string,
+    @Query('sort') sort: string,
   ) {
-    return this.orderService.find(status, type);
+    return this.orderService.find(shop_id, status, type, sort);
   }
 
   @Patch(':id')
@@ -47,5 +50,10 @@ export class OrderController {
   @Post('orderList')
   async getOrderList(@Body() queryOrderDto: QueryOrderDto) {
     return this.orderService.orderList(queryOrderDto);
+  }
+
+  @Post('accept')
+  async accept(@Body() acceptDto: AcceptDto) {
+    return this.orderService.acceptOrder(acceptDto);
   }
 }
