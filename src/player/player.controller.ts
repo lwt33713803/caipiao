@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+} from '@nestjs/common';
 import { PlayerService } from './player.service';
 import { CreatePlayerDto } from './dto/create-player.dto';
 import { UpdatePlayerDto } from './dto/update-player.dto';
@@ -10,19 +19,30 @@ export class PlayerController {
   constructor(private readonly playerService: PlayerService) {}
 
   @Post()
-  create(@Body() createPlayerDto: CreatePlayerDto) {
-    return this.playerService.create(createPlayerDto);
+  async create(@Body() createPlayerDto: CreatePlayerDto) {
+    return await this.playerService.create(createPlayerDto);
   }
 
-  @Get()
-  findAll() {
-    return this.playerService.findAll();
+  @Get('search')
+  async search() {
+    return await this.playerService.findSearch()
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.playerService.findOne(+id);
+  @Get('all')
+  async findAll(
+    @Query('shop_id') shop_id: string,
+    @Query('type') type: string,
+  ) {
+    return await this.playerService.findAll(shop_id, type);
   }
+  @Get('num')
+  async findNum(
+    @Query('shop_id') shop_id: string,
+  ) {
+    return await this.playerService.findNum(shop_id);
+  }
+
+
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePlayerDto: UpdatePlayerDto) {
