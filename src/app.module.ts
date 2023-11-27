@@ -11,11 +11,13 @@ import { OrderModule } from './order/order.module';
 import { ShopsModule } from './shops/shops.module';
 import { ClerkModule } from './clerk/clerk.module';
 import { PlayerModule } from './player/player.module';
-
+import { MemberModule } from './API/member/member.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://cp-mongo:27017/piao'),
+    MongooseModule.forRoot(
+      'mongodb://mongolcz001:mongopwd001%40%40@47.96.71.44:10002/piao',
+    ),
     ProductModule,
     CategoryModule,
     LogModule,
@@ -24,6 +26,7 @@ import { PlayerModule } from './player/player.module';
     ShopsModule,
     ClerkModule,
     PlayerModule,
+    MemberModule,
   ],
   controllers: [AppController],
   providers: [AppService],
