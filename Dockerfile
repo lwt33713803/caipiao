@@ -1,6 +1,6 @@
 FROM node:16.20.2
 
-COPY ./ /WORKSPACE
+VOLUME [ "/source/api","/WORKSPACE" ]
 
 WORKDIR /WORKSPACE
 
