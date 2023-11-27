@@ -1,6 +1,19 @@
 version: '3'
 
 services:
+
+  cp-download:
+    container_name: cp-download
+    restart: always
+    ports:
+      - "80:80"
+    image: nginx:1.25.3
+    volumes:
+      - ./download:/usr/share/nginx/html
+    networks:
+      lcz-net:
+    command: [nginx-debug, '-g', 'daemon off;']
+    
   cp-api-manager:
     container_name: cp-api
     restart: always

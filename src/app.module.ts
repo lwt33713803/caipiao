@@ -16,7 +16,7 @@ import { MemberModule } from './API/member/member.module';
 @Module({
   imports: [
     MongooseModule.forRoot(
-      'mongodb://mongolcz001:mongopwd001%40%40@47.96.71.44:10002/piao',
+      'mongodb://mongolcz001:mongopwd001%23%23%23@47.96.71.44:10002/?authMechanism=DEFAULT',
     ),
     ProductModule,
     CategoryModule,
