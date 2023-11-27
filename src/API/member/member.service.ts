@@ -1,9 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { CreateMemberDto } from './dto/create-member.dto';
 import { UpdateMemberDto } from './dto/update-member.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { MemberInterface } from './interfaces/member.interface';
 
 @Injectable()
 export class MemberService {
+  constructor(
+    @InjectModel('member') private readonly memberModel: Model<MemberInterface>,
+  ) {}
+
   create(createMemberDto: CreateMemberDto) {
     return 'This action adds a new member';
   }

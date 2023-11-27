@@ -19,33 +19,14 @@ export class MemberController {
   constructor(private readonly memberService: MemberService) {}
 
   @ApiOperation({ summary: '会员注册', description: '会员注册' })
-  @Post()
+  @Post('register')
   register(@Body() registerMemberDto: RegisterMemberDto) {
     return this.memberService.create(registerMemberDto);
   }
 
-  @Post()
+  @ApiOperation({ summary: '会员登录', description: '会员登录' })
+  @Post('login')
   login(@Body() loginMemberDto: LoginMemberDto) {
     return this.memberService.create(loginMemberDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.memberService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.memberService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMemberDto: UpdateMemberDto) {
-    return this.memberService.update(+id, updateMemberDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.memberService.remove(+id);
   }
 }

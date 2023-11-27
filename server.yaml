@@ -15,11 +15,12 @@ services:
     command: [nginx-debug, '-g', 'daemon off;']
     
   cp-api-manager:
+    build:
+      context: ./
     container_name: cp-api
     restart: always
     ports:
       - "10001:3002"
-    image: node:16.20.2
     volumes:
       - .:/workspace
     networks:
