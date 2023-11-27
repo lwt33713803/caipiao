@@ -21,8 +21,6 @@ services:
     restart: always
     ports:
       - "10001:3002"
-    volumes:
-      - .:/workspace
     networks:
       lcz-net:
     working_dir: /workspace
