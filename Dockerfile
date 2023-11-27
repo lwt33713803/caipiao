@@ -1,7 +1,7 @@
-FROM node:16.20.2
+FROM node:20.10.0
 
-VOLUME [ "/source/api","/WORKSPACE" ]
+COPY ./ /workspace
 
-WORKDIR /WORKSPACE
+WORKDIR /workspace
 
-RUN apt-get update && npm install -g pnpm && pnpm install
+RUN apt-get update && npm config set registry https://registry.npm.taobao.org && npm install -g npm && npm install -g pnpm && pnpm install
