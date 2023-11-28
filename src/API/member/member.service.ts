@@ -84,7 +84,9 @@ export class MemberService {
       );
     //生成token
     const token = randomString(32);
-    this.memberModel.updateOne({ _id: existsMember._id }, { token: token });
+    existsMember.token = token;
+    existsMember.isLogin = true;
+    this.memberModel.updateOne({ _id: existsMember._id }, existsMember);
     return { token: token };
   }
 
