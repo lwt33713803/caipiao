@@ -74,9 +74,18 @@ export class MemberService {
       throw new ApiException('用户不存在', ApiErrorCode.USER_EXIST);
     //生成token
     const token = randomString(32);
-    return this.memberModel.updateOne(
-      { _id: existsMember._id },
-      { token: token },
-    );
+    this.memberModel.updateOne({ _id: existsMember._id }, { token: token });
+    return { token: token };
+  }
+
+  async info(token: string) {
+    const info = await this.memberModel.findOne({ token: token });
+    if (!info) {
+      throw new ApiException(
+        '登录失效，请重新登录',
+        ApiErrorCode.TOKEN_INVALID,
+      );
+    }
+    return info;
   }
 }
