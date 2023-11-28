@@ -4,7 +4,7 @@ import { ApiResponseInterceptor } from './common/interceptors/api-response.inter
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { TransformInterceptor } from './common/interceptors/transform/transform.interceptor';
+// import { TransformInterceptor } from './common/interceptors/transform/transform.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });

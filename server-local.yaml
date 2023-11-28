@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+
+  cp-download:
+    container_name: cp-download
+    restart: always
+    ports:
+      - "80:80"
+    image: nginx:1.25.3
+    volumes:
+      - ./download:/usr/share/nginx/html
+    networks:
+      lcz-net:
+    command: [nginx-debug, '-g', 'daemon off;']
+    
+  cp-api-manager:
+    image: node:20.10.0
+    container_name: cp-api
+    restart: always
+    volumes:
+      - ./:/workspace
+    ports:
+      - "10001:3002"
+    networks:
+      lcz-net:
+    working_dir: /workspace
+    command: ["npm", "run", "start:dev"]
+    
+  cp-mongodb:
+    container_name: cp-mongo
+    image: mongo:7.0.3
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongolcz001
+      MONGO_INITDB_ROOT_PASSWORD: mongopwd001###
+    ports:
+      - "10002:27017"
+    networks:
+      lcz-net:
+
+networks:
+    lcz-net:

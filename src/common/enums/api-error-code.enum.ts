@@ -5,6 +5,9 @@ export enum ApiErrorCode {
   USER_EXIST = 10003, //用户已存在
   PERMISSSION_EXIST = 10004, //权限已存在
   ROLE_EXIST = 10005, //角色已存在
+  ///////
+  INVITE_CODE_NOT_EXISTS = 100006, //邀请码不存在
+
   PASSWORD_ERROR = 20005, //密码错误
   FORBIDDEN = 400, //验证不通过
   LOGIN_EXPIRE = 401, //登录状态已过期
