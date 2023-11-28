@@ -72,6 +72,16 @@ export class MemberService {
     });
     if (!existsMember)
       throw new ApiException('用户不存在', ApiErrorCode.USER_EXIST);
+    //验证密码
+    const encryptedPassword = erypto(
+      loginMemberDto.password,
+      existsMember.salt,
+    );
+    if (encryptedPassword != existsMember.password)
+      throw new ApiException(
+        '登录失败，用户名或密码错误',
+        ApiErrorCode.USER_EXIST,
+      );
     //生成token
     const token = randomString(32);
     this.memberModel.updateOne({ _id: existsMember._id }, { token: token });
