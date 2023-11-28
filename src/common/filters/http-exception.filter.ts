@@ -3,7 +3,7 @@ import {
   Catch,
   ArgumentsHost,
   HttpException,
-  Inject,
+  // Inject,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { ApiException } from './api.exception';
