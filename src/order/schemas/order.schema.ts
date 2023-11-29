@@ -33,6 +33,8 @@ export class Order extends Document {
   updateTime: string;
   @Prop({ type: mongoose.Schema.Types.Mixed })
   items: any;
+  @Prop({ type: mongoose.Schema.Types.Number })
+  award_amount: number;
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);

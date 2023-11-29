@@ -14,4 +14,5 @@ export interface OrderInterface extends Document {
   createTime: string;
   updateTime: string;
   items: any;
+  award_amount: number;
 }

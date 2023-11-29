@@ -87,6 +87,7 @@ export class OrderService {
       pay_status: 0,
       user_id: member._id,
       items: apiCreateOrderDto.items,
+      award_amount: 0,
     });
   }
 }
