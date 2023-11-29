@@ -10,4 +10,12 @@ export class ApiGetOrderDto extends PartialType(CreateOrderDto) {
   })
   @IsNotEmpty({ message: '登录失效，请重新登录' })
   token: string;
+
+  @ApiProperty({
+    example: '0',
+    required: true,
+    description: 'token',
+  })
+  @IsNotEmpty({ message: '请选择订单状态' })
+  status: number;
 }

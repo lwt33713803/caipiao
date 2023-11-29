@@ -54,6 +54,9 @@ export class OrderController {
   @ApiOperation({ summary: 'app订单列表', description: '订单列表' })
   @Post('list')
   list(@Body() apiGetOrderDto: ApiGetOrderDto) {
-    return this.orderService.getOrderByToken(apiGetOrderDto.token);
+    return this.orderService.getOrderByToken(
+      apiGetOrderDto.token,
+      apiGetOrderDto.status,
+    );
   }
 }

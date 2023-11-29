@@ -49,7 +49,7 @@ export class OrderService {
   }
 
   //根据token获取订单
-  async getOrderByToken(token: string) {
+  async getOrderByToken(token: string, status: number) {
     const member = await this.memberService.info(token);
     if (!member) {
       throw new ApiException(
@@ -57,7 +57,7 @@ export class OrderService {
         ApiErrorCode.TOKEN_INVALID,
       );
     }
-    return this.orderModel.find({ user_id: member._id });
+    return this.orderModel.find({ user_id: member._id, status: status });
   }
 
   //下单
