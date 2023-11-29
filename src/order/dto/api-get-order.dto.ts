@@ -12,10 +12,10 @@ export class ApiGetOrderDto extends PartialType(CreateOrderDto) {
   token: string;
 
   @ApiProperty({
-    example: '0',
+    example: '{}',
     required: true,
-    description: 'token',
+    description: '状态',
   })
   @IsNotEmpty({ message: '请选择订单状态' })
-  status: number;
+  status: any;
 }

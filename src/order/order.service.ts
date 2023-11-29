@@ -49,7 +49,7 @@ export class OrderService {
   }
 
   //根据token获取订单
-  async getOrderByToken(token: string, status: number) {
+  async getOrderByToken(token: string, status: string) {
     const member = await this.memberService.info(token);
     if (!member) {
       throw new ApiException(
@@ -57,7 +57,9 @@ export class OrderService {
         ApiErrorCode.TOKEN_INVALID,
       );
     }
-    return this.orderModel.find({ user_id: member._id, status: status });
+    const sta = JSON.parse(status);
+    // console.log({ user_id: member._id, ...sta });
+    return this.orderModel.find({ user_id: member._id, ...sta });
   }
 
   //下单
@@ -71,7 +73,6 @@ export class OrderService {
     }
     let total = 0;
     //计算彩票金额
-    console.log(apiCreateOrderDto.items);
     apiCreateOrderDto.items.map(function (item) {
       item['total'] = item['amount'] * item['counts'];
       total += item['total'];
