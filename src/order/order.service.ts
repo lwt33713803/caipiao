@@ -71,6 +71,7 @@ export class OrderService {
     }
     let total = 0;
     //计算彩票金额
+    console.log(apiCreateOrderDto.items);
     apiCreateOrderDto.items.map(function (item) {
       item['total'] = item['amount'] * item['counts'];
       total += item['total'];
