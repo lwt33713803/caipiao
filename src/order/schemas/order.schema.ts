@@ -9,8 +9,6 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
   },
 })
 export class Order extends Document {
-  @Prop({ type: mongoose.Schema.Types.ObjectId, required: false })
-  _id: string;
   @Prop({ type: mongoose.Schema.Types.String, required: false })
   deadline: string;
   @Prop({ type: mongoose.Schema.Types.String, required: false })
@@ -19,6 +17,8 @@ export class Order extends Document {
   status: number;
   @Prop({ type: mongoose.Schema.Types.Number, required: false })
   type: number;
+  @Prop({ type: mongoose.Schema.Types.Number, required: false })
+  pay_status: number;
   @Prop({ type: mongoose.Schema.Types.String, required: false })
   user_id: string;
   @Prop({ type: mongoose.Schema.Types.String, required: false })
@@ -27,11 +27,12 @@ export class Order extends Document {
   shop_id: string;
   @Prop({ type: mongoose.Schema.Types.String, required: false })
   money: string;
-  @Prop({ type: mongoose.Schema.Types.String})
+  @Prop({ type: mongoose.Schema.Types.String })
   createTime: string;
-
   @Prop({ type: mongoose.Schema.Types.String, default: Date.now() })
   updateTime: string;
+  @Prop({ type: mongoose.Schema.Types.Mixed })
+  items: any;
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);

@@ -15,5 +15,6 @@ const MemberTable = MongooseModule.forFeature([
   imports: [MemberTable],
   controllers: [MemberController],
   providers: [MemberService],
+  exports: [MemberService],
 })
 export class MemberModule {}

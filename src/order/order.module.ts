@@ -4,6 +4,7 @@ import { OrderController } from './order.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { OrderSchema } from './schemas/order.schema';
 import { LogModule } from '../log/log.module';
+import { MemberModule } from 'src/API/member/member.module';
 
 const OrderTable = MongooseModule.forFeature([
   {
@@ -13,7 +14,7 @@ const OrderTable = MongooseModule.forFeature([
 ]);
 
 @Module({
-  imports: [OrderTable, LogModule],
+  imports: [OrderTable, LogModule,MemberModule],
   controllers: [OrderController],
   providers: [OrderService],
 })

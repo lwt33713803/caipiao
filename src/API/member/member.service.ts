@@ -86,7 +86,7 @@ export class MemberService {
     const token = randomString(32);
     await this.memberModel.updateOne(
       { _id: existsMember._id },
-      { $set: { token: token } },
+      { $set: { token: token, isLogin: true } },
     );
     return { token: token };
   }
@@ -94,7 +94,6 @@ export class MemberService {
   async info(token: string) {
     const info = await this.memberModel.findOne({
       token: token,
-      isLogin: true,
     });
     if (!info) {
       throw new ApiException(
