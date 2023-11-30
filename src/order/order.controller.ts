@@ -1,26 +1,15 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  Query,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Query } from '@nestjs/common';
 import { OrderService } from './order.service';
-import { CreateOrderDto } from './dto/create-order.dto';
-import { AcceptDto, UpdateOrderDto } from './dto/update-order.dto';
+import { AcceptDto } from './dto/update-order.dto';
 import { QueryOrderDto } from './dto/query-order.dto';
+import { ApiGetOrderDto } from './dto/api-get-order.dto';
+import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiCreateOrderDto } from './dto/api-create-order.dto';
 
+@ApiTags('订单管理')
 @Controller('order')
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
-
-  @Post()
-  create(@Body() createOrderDto: CreateOrderDto) {
-    return this.orderService.create(createOrderDto);
-  }
 
   @Get('findAll')
   async findAll() {
@@ -37,16 +26,6 @@ export class OrderController {
     return this.orderService.find(shop_id, status, type, sort);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
-    return this.orderService.update(+id, updateOrderDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.orderService.remove(+id);
-  }
-
   @Post('orderList')
   async getOrderList(@Body() queryOrderDto: QueryOrderDto) {
     return this.orderService.orderList(queryOrderDto);
@@ -55,5 +34,29 @@ export class OrderController {
   @Post('accept')
   async accept(@Body() acceptDto: AcceptDto) {
     return this.orderService.acceptOrder(acceptDto);
+  }
+
+  @ApiBody({
+    type: ApiCreateOrderDto,
+  })
+  @ApiOperation({ summary: 'APP下单', description: 'APP下单' })
+  @Post('make')
+  make(@Body() apiCreateOrderDto: ApiCreateOrderDto) {
+    //获取会员信息
+    //计算金额
+    //支付并生成订单
+    return this.orderService.createOrder(apiCreateOrderDto);
+  }
+
+  @ApiBody({
+    type: ApiGetOrderDto,
+  })
+  @ApiOperation({ summary: 'app订单列表', description: '订单列表' })
+  @Post('list')
+  list(@Body() apiGetOrderDto: ApiGetOrderDto) {
+    return this.orderService.getOrderByToken(
+      apiGetOrderDto.token,
+      apiGetOrderDto.status,
+    );
   }
 }

@@ -54,7 +54,7 @@ export class MemberService {
       avatar: '',
       isCert: false,
       isLogin: false,
-      amount: 0.001,
+      amount: 0.0,
       todayAward: 0,
       token: '',
       waitShow: 0,
@@ -72,14 +72,29 @@ export class MemberService {
     });
     if (!existsMember)
       throw new ApiException('用户不存在', ApiErrorCode.USER_EXIST);
+    //验证密码
+    const encryptedPassword = erypto(
+      loginMemberDto.password,
+      existsMember.salt,
+    );
+    if (encryptedPassword != existsMember.password)
+      throw new ApiException(
+        '登录失败，用户名或密码错误',
+        ApiErrorCode.USER_EXIST,
+      );
     //生成token
     const token = randomString(32);
-    this.memberModel.updateOne({ _id: existsMember._id }, { token: token });
+    await this.memberModel.updateOne(
+      { _id: existsMember._id },
+      { $set: { token: token, isLogin: true } },
+    );
     return { token: token };
   }
 
   async info(token: string) {
-    const info = await this.memberModel.findOne({ token: token });
+    const info = await this.memberModel.findOne({
+      token: token,
+    });
     if (!info) {
       throw new ApiException(
         '登录失效，请重新登录',
