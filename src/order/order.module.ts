@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { OrderSchema } from './schemas/order.schema';
 import { LogModule } from '../log/log.module';
 
+
 const OrderTable = MongooseModule.forFeature([
   {
     name: 'OrderModel',

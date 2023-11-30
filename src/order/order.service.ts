@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateOrderDto } from './dto/create-order.dto';
@@ -7,16 +7,27 @@ import { QueryOrderDto } from './dto/query-order.dto';
 import { OrderInterface } from './interfaces/order.interface';
 import { OrderSchema } from './schemas/order.schema';
 
+import { Cron, Interval, Timeout } from '@nestjs/schedule';
+
 @Injectable()
 export class OrderService {
+  private readonly logger = new Logger(OrderService.name);
+
   constructor(
     @InjectModel('OrderModel')
     private readonly orderModel: Model<OrderInterface>,
   ) {}
 
+  @Cron('0 22 1 * * *')
+  querytQuintupleTask() {
+    
+    this.logger.debug('查询每日排列五中奖');
+  }
+
   create(createOrderDto: CreateOrderDto) {
     return 'This action adds a new order';
   }
+
 
   async findAll(): Promise<any[]> {
     const temp = await this.orderModel.find().exec();

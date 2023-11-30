@@ -27,6 +27,8 @@ export class Order extends Document {
   shop_id: string;
   @Prop({ type: mongoose.Schema.Types.String, required: false })
   money: string;
+  @Prop({ type: Array, required: false })
+  items: any[];
   @Prop({ type: mongoose.Schema.Types.String})
   createTime: string;
 
