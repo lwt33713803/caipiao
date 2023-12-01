@@ -21,8 +21,8 @@ import { ShopsAccountModule } from './shops_account/shops_account.module';
 @Module({
   imports: [
     MongooseModule.forRoot(
-      // 'mongodb://mongolcz001:mongopwd001%23%23%23@47.96.71.44:10002/?authMechanism=DEFAULT',
-      'mongodb://localhost:27017',
+      'mongodb://mongolcz001:mongopwd001%23%23%23@47.96.71.44:10002/?authMechanism=DEFAULT',
+      // 'mongodb://localhost:27017',
     ),
     ScheduleModule.forRoot(),
     ProductModule,

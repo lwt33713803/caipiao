@@ -22,10 +22,13 @@ export class ShopsAccountController {
   }
 
   @Get('query/:shop_id')
-  findAll(@Param('shop_id') shop_id: string, @Query('type') type: number) {
+  async findAll(
+    @Param('shop_id') shop_id: string,
+    @Query('type') type: number,
+  ) {
     console.log('shop_id', shop_id);
     console.log('type', type);
-    return this.shopsAccountService.findAll(shop_id, type);
+    return await this.shopsAccountService.findAll(shop_id, type);
   }
 
   @Get(':id')

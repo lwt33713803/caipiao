@@ -21,9 +21,9 @@ export class ShopsAccountService {
     console.log('type', type);
     const arr = [{ shop_id }, { $and: [{ shop_id }, { type }] }];
     // 全部
-    if (!type) return await this.ShopsAccountModel.find(arr[0]);
+    if (!type) return await this.ShopsAccountModel.find(arr[0]).sort({ create_time: -1 });
     // 根据 type 0: 支出、1：收入
-    return await this.ShopsAccountModel.find(arr[1]);
+    return await this.ShopsAccountModel.find(arr[1]).sort({ create_time: -1 });
   }
 
   findOne(id: number) {
