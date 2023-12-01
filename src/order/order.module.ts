@@ -14,7 +14,7 @@ const OrderTable = MongooseModule.forFeature([
 ]);
 
 @Module({
-  imports: [OrderTable, LogModule,MemberModule],
+  imports: [OrderTable, LogModule, MemberModule],
   controllers: [OrderController],
   providers: [OrderService],
 })
