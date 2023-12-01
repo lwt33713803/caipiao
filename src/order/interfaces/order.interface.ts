@@ -15,4 +15,5 @@ export interface OrderInterface extends Document {
   updateTime: string;
   items: any;
   award_amount: number;
+  img_url?: string;
 }

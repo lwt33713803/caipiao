@@ -12,6 +12,8 @@ const ShopsTable = MongooseModule.forFeature([
   },
 ]);
 
+
+
 @Module({
   imports: [ShopsTable, LogModule],
   controllers: [ShopsController],

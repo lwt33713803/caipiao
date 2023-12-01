@@ -2,30 +2,21 @@ import { Injectable } from '@nestjs/common';
 import { UpdateShopDto } from './dto/update-shop.dto';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { ShopsInterface } from './interfaces/shops.interface';
+import { Shops } from './schemas/shops.schema';
 
 @Injectable()
 export class ShopsService {
+  logger: any;
   constructor(
-
     @InjectModel('ShopsModel')
-    private readonly ShopsModel: Model<ShopsInterface>,
-
+    private readonly ShopsModel: Model<Shops>,
   ) {}
-
-  findAll() {
-    return `This action returns all shops`;
-  }
-
-  update(id: number, updateShopDto: UpdateShopDto) {
-    return `This action updates a #${id} shop`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} shop`;
-  }
 
   myInfo(shop_id: string) {
     return this.ShopsModel.findOne({ shop_id }).exec();
+  }
+
+  update(shop_id: string, updateShopDto: UpdateShopDto) {
+    return this.ShopsModel.updateOne({ shop_id }, { $set: updateShopDto });
   }
 }

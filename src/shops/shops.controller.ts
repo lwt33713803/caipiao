@@ -18,20 +18,7 @@ export class ShopsController {
   constructor(private readonly shopsService: ShopsService) {}
 
 
-  @Get()
-  findAll() {
-    return this.shopsService.findAll();
-  }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateShopDto: UpdateShopDto) {
-    return this.shopsService.update(+id, updateShopDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.shopsService.remove(+id);
-  }
 
   @Get('info')
   async findMyInfo(@Query('shop_id') shop_id: string) {
@@ -53,4 +40,6 @@ export class ShopsController {
     if (!data) return [];
     return data.clerk_manage;
   }
+
+  
 }
