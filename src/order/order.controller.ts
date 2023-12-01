@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query, Param } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { AcceptDto } from './dto/update-order.dto';
 import { QueryOrderDto } from './dto/query-order.dto';
@@ -26,14 +26,30 @@ export class OrderController {
     return this.orderService.find(shop_id, status, type, sort);
   }
 
-  @Post('orderList')
-  async getOrderList(@Body() queryOrderDto: QueryOrderDto) {
-    return this.orderService.orderList(queryOrderDto);
+  @Post('accept')
+  accept(@Body() acceptDto: AcceptDto) {
+    return this.orderService.accept(acceptDto);
   }
 
-  @Post('accept')
-  async accept(@Body() acceptDto: AcceptDto) {
-    return this.orderService.acceptOrder(acceptDto);
+  @Post('drawer')
+  drawer(@Body() acceptDto: AcceptDto) {
+    return this.orderService.drawer(acceptDto);
+  }
+
+  @Get('query/drawer/:shop_id')
+  queryDrawer(
+    @Param('shop_id') shop_id: string,
+    @Query('status') status: number,
+  ) {
+    return this.orderService.queryDrawer(shop_id, status);
+  }
+
+  @Get('query/desc/:shop_id')
+  orderDesc(
+    @Param('shop_id') shop_id: string,
+    @Query('id') id: string,
+  ) {
+    return this.orderService.orderDesc(shop_id, id);
   }
 
   @ApiBody({

@@ -35,6 +35,9 @@ export class Order extends Document {
   items: any;
   @Prop({ type: mongoose.Schema.Types.Number })
   award_amount: number;
+
+  @Prop({ type: mongoose.Schema.Types.String })
+  img_url: string;
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);

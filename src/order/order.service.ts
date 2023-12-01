@@ -1,4 +1,4 @@
-import { Inject, Injectable,Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { AcceptDto } from './dto/update-order.dto';
@@ -37,17 +37,29 @@ export class OrderService {
   }
 
   // 接单
-  async acceptOrder(acceptDto: AcceptDto) {
+  async accept(acceptDto: AcceptDto) {
     const { _id } = acceptDto;
     return await this.orderModel.findOneAndUpdate({ _id }, { status: 1 });
   }
 
-  orderList(queryOrderDto: QueryOrderDto) {
-    console.log(`QueryOrderDto`, queryOrderDto);
-    // const { timeType, categoryType, type } = queryOrderDto;
-    //timeType: 0 截至时间、1 下单时间、2 下单排序
-    //categoryType: 0 全部、1 竞彩足球、2 竞彩篮球、3 胜负彩、4 任选九、5 大乐透、6 排列三、7 排列五、8 七星彩、9 4场全进 、10 6场全进
-    //type：0 未结单、1 未出票
+  // 出票
+  async drawer(acceptDto: AcceptDto) {
+    const { _id } = acceptDto;
+    // 上传图片为完善
+    return await this.orderModel.findOneAndUpdate(
+      { _id },
+      { status: 2, img_url: 'https://cdn.uviewui.com/uview/swiper/1.jpg' },
+    );
+  }
+
+  async queryDrawer(shop_id: string, status: number) {
+    const query = { $and: [{ shop_id, status }] };
+    return await this.orderModel.find(query).sort({ order_time: -1 }).exec();
+  }
+
+  async orderDesc(shop_id: string, id: string) {
+    const query = { $and: [{ shop_id, _id: id }] };
+    return await this.orderModel.findOne(query).exec();
   }
 
   //根据token获取订单
