@@ -6,7 +6,7 @@ import { RegisterMemberDto } from './dto/register-member.dto';
 import { LoginMemberDto } from './dto/login-member.dto';
 import { ApiException } from 'src/common/filters/api.exception';
 import { ApiErrorCode } from 'src/common/enums/api-error-code.enum';
-import erypto from 'src/common/utils/erypto';
+import { encryptPassword } from 'src/common/utils/erypto';
 import { randomString } from 'src/common/utils/tools';
 
 @Injectable()
@@ -44,7 +44,7 @@ export class MemberService {
     //密码处理
     const inviteCode = randomString(6);
     const salt = randomString(6);
-    const encryptedPassword = erypto(registerMemberDto.password, salt);
+    const encryptedPassword = encryptPassword(registerMemberDto.password, salt);
     //会员对象初始化
     const member: MemberInterface = {
       phone: registerMemberDto.phone,
@@ -73,7 +73,7 @@ export class MemberService {
     if (!existsMember)
       throw new ApiException('用户不存在', ApiErrorCode.USER_EXIST);
     //验证密码
-    const encryptedPassword = erypto(
+    const encryptedPassword = encryptPassword(
       loginMemberDto.password,
       existsMember.salt,
     );
