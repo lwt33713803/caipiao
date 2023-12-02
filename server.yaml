@@ -19,6 +19,8 @@ services:
       context: ./
     container_name: cp-api
     restart: always
+    volumes:
+      - ./:/workspace
     ports:
       - "10001:3002"
     networks:
