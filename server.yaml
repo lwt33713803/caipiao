@@ -20,14 +20,13 @@ services:
     container_name: cp-api
     restart: always
     volumes:
-      - ./node_modules/:/workspace/node_modules/
+      - ./node_modules:/workspace/node_modules
     ports:
       - "10001:3002"
     networks:
       lcz-net:
     working_dir: /workspace
-    command: ["npm", "run", "start:dev"]
-    
+    command: ["npm", "run", "start:prod"]
     
   cp-mongodb:
     container_name: cp-mongo
