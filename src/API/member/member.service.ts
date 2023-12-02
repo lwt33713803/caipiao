@@ -103,4 +103,6 @@ export class MemberService {
     }
     return info;
   }
+
+  //扣减金额，记录帐变
 }
