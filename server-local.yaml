@@ -39,5 +39,17 @@ services:
     networks:
       lcz-net:
 
+  cp-app-manager:
+    container_name: cp-app-manager
+    restart: always
+    ports:
+      - "10003:80"
+    image: nginx:1.25.3
+    volumes:
+      - ../app_manage/unpackage/dist/build/h5:/usr/share/nginx/html/
+    networks:
+      lcz-net:
+    command: [nginx-debug, '-g', 'daemon off;']
+
 networks:
     lcz-net:
