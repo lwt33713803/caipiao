@@ -26,7 +26,7 @@ services:
     networks:
       lcz-net:
     working_dir: /workspace
-    command: ["npm", "run", "start:prod"]
+    command: ["npm", "run", "start:dev"]
     
   cp-mongodb:
     container_name: cp-mongo
