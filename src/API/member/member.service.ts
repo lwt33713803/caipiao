@@ -105,4 +105,5 @@ export class MemberService {
   }
 
   //扣减金额，记录帐变
+  async reduceAmount(amount: number) {}
 }

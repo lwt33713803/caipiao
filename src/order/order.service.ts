@@ -7,6 +7,7 @@ import { ApiException } from 'src/common/filters/api.exception';
 import { ApiErrorCode } from 'src/common/enums/api-error-code.enum';
 import { MemberService } from 'src/API/member/member.service';
 import { ApiCreateOrderDto } from 'src/order/dto/api-create-order.dto';
+import { MemberWalletOperationsService } from 'src/API/member_wallet_operations/member_wallet_operations.service';
 
 @Injectable()
 export class OrderService {
@@ -17,6 +18,8 @@ export class OrderService {
     private readonly orderModel: Model<OrderInterface>,
     @Inject(MemberService)
     private readonly memberService: MemberService,
+    @Inject(MemberWalletOperationsService)
+    private readonly memberWalletOperationsService: MemberWalletOperationsService,
   ) {}
 
   async findAll(): Promise<any[]> {
@@ -112,6 +115,7 @@ export class OrderService {
   async queryOrderById(order_id: string) {
     return this.orderModel.findById(order_id);
   }
+
 
   setOrderPayed(order_id: string) {
     this.orderModel.findOneAndUpdate({ _id: order_id }, { pay_status: 1 });

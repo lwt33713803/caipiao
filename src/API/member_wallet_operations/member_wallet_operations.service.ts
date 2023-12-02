@@ -1,26 +1,42 @@
 import { Injectable } from '@nestjs/common';
-import { CreateMemberWalletOperationDto } from './dto/create-member_wallet_operation.dto';
-import { UpdateMemberWalletOperationDto } from './dto/update-member_wallet_operation.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { MemberWalletOperationInterface } from './interfaces/member_wallet_operations.interface';
 
 @Injectable()
 export class MemberWalletOperationsService {
-  create(createMemberWalletOperationDto: CreateMemberWalletOperationDto) {
-    return 'This action adds a new memberWalletOperation';
+  constructor(
+    @InjectModel('MemberWalletOperation')
+    private readonly memberWalletOperation: Model<MemberWalletOperationInterface>,
+  ) {}
+
+  create(
+    member_id: string,
+    type: string,
+    amount: string,
+    before: string,
+    after: string,
+  ) {
+    const operation = {
+      member: member_id,
+      type: type,
+      amouont: amount,
+      before: before,
+      after: after,
+      time: Date.now(),
+    };
+    return this.memberWalletOperation.create(operation);
+  }
+
+  findAllByType(type: string) {
+    return this.memberWalletOperation.find({ type: type });
   }
 
   findAll() {
-    return `This action returns all memberWalletOperations`;
+    return this.memberWalletOperation.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} memberWalletOperation`;
-  }
-
-  update(id: number, updateMemberWalletOperationDto: UpdateMemberWalletOperationDto) {
-    return `This action updates a #${id} memberWalletOperation`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} memberWalletOperation`;
+  findOne(id: string) {
+    return this.memberWalletOperation.findById(id);
   }
 }

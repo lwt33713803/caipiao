@@ -18,7 +18,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { LotteryModule } from './lottery/lottery.module';
 import { ShopsAccountModule } from './shops_account/shops_account.module';
 import { MessageModule } from './API/message/message.module';
-import { MemberWalletOperationsModule } from './member_wallet_operations/member_wallet_operations.module';
+import { MemberWalletOperationsModule } from './API/member_wallet_operations/member_wallet_operations.module';
 
 @Module({
   imports: [
