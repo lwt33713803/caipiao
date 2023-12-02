@@ -4,4 +4,7 @@ COPY ./ /workspace
 
 WORKDIR /workspace
 
-RUN apt-get update && npm config set registry https://registry.npm.taobao.org && npm install -g npm && npm install -g pnpm && pnpm install
+RUN apt-get update 
+RUN npm config set registry https://registry.npm.taobao.org && npm install -g npm 
+RUN npm install -g pnpm 
+RUN pnpm install
