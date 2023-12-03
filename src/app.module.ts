@@ -17,12 +17,13 @@ import { ShopsDataModule } from './shops_data/shops_data.module';
 import { ScheduleModule } from '@nestjs/schedule'
 import { LotteryModule } from './lottery/lottery.module';
 import { ShopsAccountModule } from './shops_account/shops_account.module';
+import { LotteryTypesModule } from './lottery_types/lottery_types.module';
 
 @Module({
   imports: [
     MongooseModule.forRoot(
-      // 'mongodb://mongolcz001:mongopwd001%23%23%23@47.96.71.44:10002/?authMechanism=DEFAULT',
-      'mongodb://localhost:27017',
+      'mongodb://mongolcz001:mongopwd001%23%23%23@47.96.71.44:10002/?authMechanism=DEFAULT',
+      // 'mongodb://localhost:27017',
     ),
     ScheduleModule.forRoot(),
     ProductModule,
@@ -37,6 +38,7 @@ import { ShopsAccountModule } from './shops_account/shops_account.module';
     ShopsDataModule,
     LotteryModule,
     ShopsAccountModule,
+    LotteryTypesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

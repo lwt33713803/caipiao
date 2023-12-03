@@ -6,7 +6,6 @@ import { OrderSchema } from './schemas/order.schema';
 import { LogModule } from '../log/log.module';
 import { MemberModule } from 'src/API/member/member.module';
 
-
 const OrderTable = MongooseModule.forFeature([
   {
     name: 'OrderModel',
@@ -15,7 +14,7 @@ const OrderTable = MongooseModule.forFeature([
 ]);
 
 @Module({
-  imports: [OrderTable, LogModule,MemberModule],
+  imports: [OrderTable, LogModule, MemberModule],
   controllers: [OrderController],
   providers: [OrderService],
 })
