@@ -10,7 +10,7 @@ export interface OrderInterface extends Document {
   user_id: string;
   user_name: string;
   shop_id: string;
-  money: string;
+  money: number;
   createTime: string;
   updateTime: string;
   items: any;

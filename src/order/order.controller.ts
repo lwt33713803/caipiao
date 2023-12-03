@@ -1,15 +1,25 @@
 import { Controller, Get, Post, Body, Query, Param } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { AcceptDto } from './dto/update-order.dto';
-import { QueryOrderDto } from './dto/query-order.dto';
 import { ApiGetOrderDto } from './dto/api-get-order.dto';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ApiCreateOrderDto } from './dto/api-create-order.dto';
+import { ApiPayOrderDto } from './dto/api-pay-order.dto';
+import { MemberService } from 'src/API/member/member.service';
+import { ApiException } from 'src/common/filters/api.exception';
+import { ApiErrorCode } from 'src/common/enums/api-error-code.enum';
+import { MemberInterface } from 'src/API/member/interfaces/member.interface';
+import { OrderInterface } from './interfaces/order.interface';
+import { MemberWalletOperationsService } from '../API/member_wallet_operations/member_wallet_operations.service';
 
 @ApiTags('订单管理')
 @Controller('order')
 export class OrderController {
-  constructor(private readonly orderService: OrderService) {}
+  constructor(
+    private readonly orderService: OrderService,
+    private readonly memberServer: MemberService,
+    private readonly memberWalletOperationsService: MemberWalletOperationsService,
+  ) {}
 
   @Get('findAll')
   async findAll() {
@@ -45,34 +55,71 @@ export class OrderController {
   }
 
   @Get('query/desc/:shop_id')
-  orderDesc(
-    @Param('shop_id') shop_id: string,
-    @Query('id') id: string,
-  ) {
+  orderDesc(@Param('shop_id') shop_id: string, @Query('id') id: string) {
     return this.orderService.orderDesc(shop_id, id);
   }
 
   @ApiBody({
     type: ApiCreateOrderDto,
   })
-  @ApiOperation({ summary: 'APP下单', description: 'APP下单' })
+  @ApiOperation({ summary: 'app下单', description: 'app下单' })
   @Post('make')
   make(@Body() apiCreateOrderDto: ApiCreateOrderDto) {
-    //获取会员信息
-    //计算金额
-    //支付并生成订单
     return this.orderService.createOrder(apiCreateOrderDto);
   }
 
   @ApiBody({
     type: ApiGetOrderDto,
   })
-  @ApiOperation({ summary: 'app订单列表', description: '订单列表' })
+  @ApiOperation({ summary: 'app订单列表', description: 'app订单列表' })
   @Post('list')
   list(@Body() apiGetOrderDto: ApiGetOrderDto) {
     return this.orderService.getOrderByToken(
       apiGetOrderDto.token,
       apiGetOrderDto.status,
     );
+  }
+
+  @ApiBody({
+    type: ApiPayOrderDto,
+  })
+  @ApiOperation({ summary: 'app支付订单', description: 'app支付订单' })
+  @Post('pay')
+  async pay(@Body() apiPayOrderDto: ApiPayOrderDto) {
+    //订单信息
+    const order: OrderInterface = await this.orderService.queryOrderById(
+      apiPayOrderDto.order_id,
+    );
+
+    //会员信息
+    const member: MemberInterface = await this.memberServer.info(
+      apiPayOrderDto.token,
+    );
+
+    if (order.pay_status === 1) {
+      throw new ApiException('订单已支付', ApiErrorCode.FORBIDDEN);
+    }
+
+    if (member.amount < order.money) {
+      throw new ApiException('账户余额不足，请充值', ApiErrorCode.FORBIDDEN);
+    }
+    //支付操作
+    const before = member.amount;
+    //扣除金额。
+    member.amount = member.amount - order.money;
+    //保存消费日志
+    this.memberWalletOperationsService.create(
+      member._id,
+      'buy',
+      order.money.toString(),
+      before.toString(),
+      member.amount.toString(),
+    );
+    //修改订单状态。
+    order.pay_status = 1;
+    member.save();
+    order.save();
+
+    return 'success';
   }
 }
