@@ -88,6 +88,9 @@ export class OrderService {
         ApiErrorCode.TOKEN_INVALID,
       );
     }
+
+    member.waitShow = member.waitShow + 1;
+    member.save();
     let total = 0;
     //计算彩票金额
     apiCreateOrderDto.items.map(function (item) {
@@ -105,6 +108,7 @@ export class OrderService {
       user_id: member._id,
       items: apiCreateOrderDto.items,
       award_amount: 0,
+      shop_id: '656c3cec388c800f22e0652b',
     });
   }
 
@@ -115,7 +119,6 @@ export class OrderService {
   async queryOrderById(order_id: string) {
     return this.orderModel.findById(order_id);
   }
-
 
   setOrderPayed(order_id: string) {
     this.orderModel.findOneAndUpdate({ _id: order_id }, { pay_status: 1 });

@@ -22,6 +22,8 @@ export class Message extends Document {
   creat_at: string;
   @Prop({ type: mongoose.Schema.Types.String, required: true })
   type: string;
+  @Prop({ type: mongoose.Schema.Types.String, required: true })
+  isRead: string;
 }
 
 export const MessageSchema = SchemaFactory.createForClass(Message);

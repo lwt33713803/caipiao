@@ -11,9 +11,9 @@ export interface MemberInterface extends Document {
   amount: number;
   todayAward: number;
   token: string;
-  waitShow: number;
-  waitAward: number;
-  award: number;
+  waitShow: number; //待出票
+  waitAward: number; //待开奖
+  award: number; //已开奖
   inviteCode: string;
   parents: any;
 }

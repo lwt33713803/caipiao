@@ -49,7 +49,7 @@ export class MemberService {
     const member: MemberInterface = {
       phone: registerMemberDto.phone,
       password: encryptedPassword,
-      name: '',
+      name: '尚未设置昵称',
       salt: salt,
       avatar: '',
       isCert: false,

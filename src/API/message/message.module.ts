@@ -3,6 +3,7 @@ import { MessageService } from './message.service';
 import { MessageController } from './message.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MessageSchema } from './schemas/message.schema';
+import { MemberModule } from '../member/member.module';
 
 const TableMessage = MongooseModule.forFeature([
   {
@@ -12,7 +13,7 @@ const TableMessage = MongooseModule.forFeature([
 ]);
 
 @Module({
-  imports: [TableMessage],
+  imports: [TableMessage, MemberModule],
   controllers: [MessageController],
   providers: [MessageService],
 })

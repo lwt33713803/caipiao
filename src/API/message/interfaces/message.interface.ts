@@ -7,4 +7,5 @@ export interface MessageInterfaces extends Document {
   contet: string; //内容
   create_at: Date; //创建时间
   type: string; //消息类型
+  isRead: string; //阅读状态
 }
