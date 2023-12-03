@@ -17,6 +17,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { LogService } from '../log/log.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
+import mongoose from 'mongoose';
 
 @ApiTags('用户管理接口')
 @Controller('users')
@@ -28,6 +29,11 @@ export class UsersController {
 
   @Post('register')
   register(@Body() createUserDto: CreateUserDto) {
+    const token = this.usersService.createToken();
+    const shop_id = new mongoose.Types.ObjectId().toString();
+    createUserDto['token'] = token;
+    createUserDto['shop_id'] = shop_id;
+    createUserDto['state'] = '启用';
     return this.usersService.create(createUserDto);
   }
 
@@ -68,6 +74,7 @@ export class UsersController {
   @Post('login')
   async login(@Body() createUserDto: CreateUserDto, @Ip() ip: string) {
     const user = await this.usersService.getUserByName(createUserDto);
+    console.log('user',user)
     if (!user) {
       throw new HttpException('请输入正确的账户和密码', HttpStatus.BAD_REQUEST);
     }
@@ -85,7 +92,7 @@ export class UsersController {
         'https://cdn.learnku.com//uploads/communities/WtC3cPLHzMbKRSZnagU9.png!/both/44x44',
       email: 'Ronnie@123.com',
       role: ['admin'],
-      shop_id: user.shop_id
+      shop_id: user.shop_id,
     };
   }
 
@@ -98,6 +105,4 @@ export class UsersController {
     this.usersService.setTokenToUser(new_token, user.id);
     return { token: new_token };
   }
-
-  
 }
