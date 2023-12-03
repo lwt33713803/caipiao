@@ -13,6 +13,7 @@ export class LotteryTypesService {
   ) {}
 
   create(createLotteryTypeDto: CreateLotteryTypeDto) {
+    console.log(createLotteryTypeDto)
     return 'This action adds a new lotteryType';
   }
 

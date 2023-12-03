@@ -8,17 +8,17 @@ import {
 export interface ShopsInterface extends Document {
   _id: string;
   shop_id: string;
-  remaining_sum: string;
+  remaining_sum: number;
   trust_sum: number;
   setting: {
     register_flag: boolean;
     home_poster: boolean;
     home_order_remind: boolean;
   };
-  user_manage: CreateShopsUser[];
-  clerk_manage: CreateShopsClerk[];
+  user_manage: [];
+  clerk_manage: [];
   receipt_manage: {
-    alipay: CreateShopsAlipay[];
-    code: any[]
+    alipay: [];
+    code: []
   };
 }

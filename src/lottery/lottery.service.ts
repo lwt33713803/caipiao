@@ -100,7 +100,7 @@ export class LotteryService {
     const order = await this.LotteryModel.findOne({ order_id: id }).exec();
     const user = await this.ShopsModel.findOne({ shop_id }).exec();
     if (order) {
-      const total = Number(user.remaining_sum);
+      const total = user.remaining_sum;
       const winning = Number(order.winning);
       // 店铺余额 - 中奖金额
       let result: number = total - winning;
@@ -116,7 +116,7 @@ export class LotteryService {
       // 更新 个人信息表
       await this.ShopsModel.updateOne(
         { shop_id },
-        { $set: { remaining_sum: result.toString() } },
+        { $set: { remaining_sum: result } },
       );
 
       // 添加 账户明细-扣款信息
