@@ -89,8 +89,6 @@ export class OrderService {
       );
     }
 
-    member.waitShow = member.waitShow + 1;
-    member.save();
     let total = 0;
     //计算彩票金额
     apiCreateOrderDto.items.map(function (item) {

@@ -3,6 +3,7 @@ import { MemberWalletOperationsService } from './member_wallet_operations.servic
 import { MemberWalletOperationsController } from './member_wallet_operations.controller';
 import { MemberWalletOperationSchema } from './schemas/member_wallet_operations.schema';
 import { MongooseModule } from '@nestjs/mongoose';
+import { MemberModule } from '../member/member.module';
 
 const table = MongooseModule.forFeature([
   {
@@ -12,7 +13,7 @@ const table = MongooseModule.forFeature([
 ]);
 
 @Module({
-  imports: [table],
+  imports: [table, MemberModule],
   controllers: [MemberWalletOperationsController],
   providers: [MemberWalletOperationsService],
   exports: [MemberWalletOperationsService],

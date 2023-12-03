@@ -117,7 +117,7 @@ export class OrderController {
     );
     //修改订单状态。
     order.pay_status = 1;
-    member.waitAward = member.waitAward + 1;
+    member.waitAward = member.waitShow + 1;
     member.save();
     order.save();
 
