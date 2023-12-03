@@ -5,6 +5,8 @@ import { Model } from 'mongoose';
 import { UsersInterface } from './interfaces/users.interface';
 import * as crypto from 'crypto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { ApiException } from 'src/common/filters/api.exception';
+import { ApiErrorCode } from 'src/common/enums/api-error-code.enum';
 import { ResetPasswordDto } from './dto/reset-password.dto';
 
 @Injectable()
@@ -14,8 +16,11 @@ export class UsersService {
     private readonly usrsModel: Model<UsersInterface>,
   ) {}
 
-  create(createUserDto: CreateUserDto) {
-    return this.usrsModel.create(createUserDto);
+  async create(createUserDto: CreateUserDto) {
+    const { name } = createUserDto;
+    const data = await this.usrsModel.findOne({ name });
+    if(!data) return this.usrsModel.create(createUserDto);
+    throw new ApiException('用户已存在', ApiErrorCode.USER_EXIST);
   }
 
   update(updateUserDto: UpdateUserDto) {
@@ -41,7 +46,7 @@ export class UsersService {
   }
 
   getUserByName(user: CreateUserDto) {
-    return this.usrsModel.findOne({ name: user.name });
+    return this.usrsModel.findOne({ name: user.name, password: user.password });
   }
 
   getOneByToken(token: string) {
@@ -57,5 +62,4 @@ export class UsersService {
       token: token,
     });
   }
-
 }

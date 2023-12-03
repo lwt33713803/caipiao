@@ -17,8 +17,10 @@ import { ShopsDataModule } from './shops_data/shops_data.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { LotteryModule } from './lottery/lottery.module';
 import { ShopsAccountModule } from './shops_account/shops_account.module';
+import { LotteryTypesModule } from './lottery_types/lottery_types.module';
 import { MessageModule } from './API/message/message.module';
 import { MemberWalletOperationsModule } from './API/member_wallet_operations/member_wallet_operations.module';
+import { RegisterModule } from './register/register.module';
 
 @Module({
   imports: [
@@ -39,8 +41,10 @@ import { MemberWalletOperationsModule } from './API/member_wallet_operations/mem
     ShopsDataModule,
     LotteryModule,
     ShopsAccountModule,
+    LotteryTypesModule,
     MessageModule,
     MemberWalletOperationsModule,
+    RegisterModule,
   ],
   controllers: [AppController],
   providers: [AppService],
