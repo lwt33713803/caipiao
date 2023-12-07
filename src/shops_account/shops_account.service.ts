@@ -17,8 +17,6 @@ export class ShopsAccountService {
   }
 
   async findAll(shop_id: string, type: number) {
-    console.log('shop_id', shop_id);
-    console.log('type', type);
     const arr = [{ shop_id }, { $and: [{ shop_id }, { type }] }];
     // 全部
     if (!type) return await this.ShopsAccountModel.find(arr[0]).sort({ create_time: -1 });

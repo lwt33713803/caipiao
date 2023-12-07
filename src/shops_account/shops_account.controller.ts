@@ -26,8 +26,6 @@ export class ShopsAccountController {
     @Param('shop_id') shop_id: string,
     @Query('type') type: number,
   ) {
-    console.log('shop_id', shop_id);
-    console.log('type', type);
     return await this.shopsAccountService.findAll(shop_id, type);
   }
 

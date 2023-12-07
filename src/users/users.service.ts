@@ -32,7 +32,6 @@ export class UsersService {
     if (!data) {
       defaultSystem['shop_id'] = shop_id;
       defaultInfo['shop_id'] = shop_id;
-      console.log(defaultInfo)
       // 添加 彩种设置
       this.lotteryTypesModule.create(defaultSystem);
       // 添加 个人信息
@@ -54,7 +53,6 @@ export class UsersService {
     );
   }
   getAll(page: number, page_size: number) {
-    console.log(page);
     return this.usrsModel
       .find()
       .limit(page_size)

@@ -31,6 +31,8 @@ export class Lottery extends Document {
   winning_type: number;
   @Prop({ type: mongoose.Schema.Types.Number, required: false })
   winning_status: number;
+  @Prop({ type: mongoose.Schema.Types.String, required: false })
+  target: string;
 }
 
 export const LotterySchema = SchemaFactory.createForClass(Lottery);

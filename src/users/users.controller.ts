@@ -78,7 +78,6 @@ export class UsersController {
   @Post('login')
   async login(@Body() createUserDto: CreateUserDto, @Ip() ip: string) {
     const user = await this.usersService.getUserByName(createUserDto);
-    console.log('user', user);
     if (!user) {
       throw new HttpException('请输入正确的账户和密码', HttpStatus.BAD_REQUEST);
     }

@@ -26,8 +26,6 @@ export class LotteryTypesService {
   }
 
   async upLottery(id: string, updateLotteryTypeDto: UpdateLotteryTypeDto) {
-    console.log(id);
-    console.log(updateLotteryTypeDto);
     const { type } = updateLotteryTypeDto;
     const arr = [
       'competitive_football',
