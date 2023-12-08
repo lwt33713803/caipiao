@@ -27,12 +27,14 @@ export class ShopsController {
   @Get('info')
   async findMyInfo(@Query('shop_id') shop_id: string) {
     const data = await this.shopsService.myInfo(shop_id);
+    console.log(data);
     if (data) {
-      const { remaining_sum, trust_sum, receipt_manage } = data;
+      const { remaining_sum, trust_sum, receipt_manage,shop_name,shop_master,shop_phone } = data;
       return {
-        remaining_sum, // 店铺余额
-        trust_sum, // 托管余额
+        remaining_sum: remaining_sum.toFixed(2), // 店铺余额
+        trust_sum: trust_sum.toFixed(2), // 托管余额
         receipt_manage, // 店铺支持
+        shop_name,shop_phone,shop_master
       };
     }
     return {};

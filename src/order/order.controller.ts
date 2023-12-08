@@ -26,6 +26,15 @@ export class OrderController {
     return this.orderService.findAll();
   }
 
+  @ApiOperation({ summary: '我的信息', description: '我的信息-列表' })
+  @Get('myInfo')
+  async myInfo(
+    @Query('shop_id') shop_id: string,
+    @Query('status') status: string,
+  ) {
+    return this.orderService.myInfo(shop_id, status);
+  }
+
   @Get('list')
   findOne(
     @Query('shop_id') shop_id: string,

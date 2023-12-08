@@ -38,6 +38,8 @@ export class Order extends Document {
 
   @Prop({ type: mongoose.Schema.Types.String })
   img_url: string;
+  @Prop({ type: mongoose.Schema.Types.String, required: false })
+  service: string;
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);

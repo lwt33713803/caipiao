@@ -16,4 +16,6 @@ export interface MemberInterface extends Document {
   award: number; //已开奖
   inviteCode: string;
   parents: any;
+  items?: any[];
+  order_id?: string; 
 }

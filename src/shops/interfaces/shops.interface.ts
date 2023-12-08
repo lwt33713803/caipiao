@@ -21,4 +21,10 @@ export interface ShopsInterface extends Document {
     alipay: [];
     code: []
   };
+
+  shop_name?: string;
+  shop_master?: string;
+  shop_phone?: string;
+  shop_address?: string;
+  shop_notice?: string;
 }

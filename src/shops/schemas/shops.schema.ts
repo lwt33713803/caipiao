@@ -12,6 +12,16 @@ import { CreateShopsClerk } from '../dto/create-shop.dto';
 export class Shops extends Document {
   @Prop({ type: mongoose.Schema.Types.String })
   shop_id: string;
+  @Prop({ type: mongoose.Schema.Types.String, required: false })
+  shop_name: string;
+  @Prop({ type: mongoose.Schema.Types.String, required: false })
+  shop_master: string;
+  @Prop({ type: mongoose.Schema.Types.String, required: false })
+  shop_phone: string;
+  @Prop({ type: mongoose.Schema.Types.String, required: false })
+  shop_address: string;
+  @Prop({ type: mongoose.Schema.Types.String, required: false })
+  shop_notice: string;
   @Prop({ type: mongoose.Schema.Types.Number })
   remaining_sum: number;
   @Prop({ type: mongoose.Schema.Types.Number })

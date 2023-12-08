@@ -9,6 +9,10 @@ export class AcceptDto {
     example: '1',
     description: '用户ID ',
   })
+  @ApiProperty({ required: true, description: '订单ID' })
   @IsNotEmpty()
   _id: string;
+
+  @ApiProperty({ required: false, description: '商家ID' })
+  shop_id?: string;
 }
