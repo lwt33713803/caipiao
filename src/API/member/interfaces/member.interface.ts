@@ -4,6 +4,7 @@ export interface MemberInterface extends Document {
   name: string;
   phone: string;
   password: string;
+  payPassword: string;
   salt: string;
   avatar: string;
   isCert: boolean;
@@ -16,4 +17,8 @@ export interface MemberInterface extends Document {
   award: number; //已开奖
   inviteCode: string;
   parents: any;
+  certs: {
+    cardID: string;
+    cardName: string;
+  };
 }

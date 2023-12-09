@@ -19,4 +19,8 @@ export class ShopsService {
   update(shop_id: string, updateShopDto: UpdateShopDto) {
     return this.ShopsModel.updateOne({ shop_id }, { $set: updateShopDto });
   }
+
+  findall() {
+    return this.ShopsModel.find();
+  }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { MemberInterface } from './interfaces/member.interface';
@@ -8,11 +8,14 @@ import { ApiException } from 'src/common/filters/api.exception';
 import { ApiErrorCode } from 'src/common/enums/api-error-code.enum';
 import { encryptPassword } from 'src/common/utils/erypto';
 import { randomString } from 'src/common/utils/tools';
+import { MemberWalletOperationsService } from '../member_wallet_operations/member_wallet_operations.service';
 
 @Injectable()
 export class MemberService {
   constructor(
     @InjectModel('member') private readonly memberModel: Model<MemberInterface>,
+    @Inject(forwardRef(() => MemberWalletOperationsService))
+    private readonly memberWalletOperationsService: MemberWalletOperationsService,
   ) {}
 
   async create(registerMemberDto: RegisterMemberDto) {
@@ -104,6 +107,34 @@ export class MemberService {
     return info;
   }
 
+  async findByPhone(phone: string) {
+    const info = await this.memberModel.findOne({
+      phone: phone,
+    });
+    return info;
+  }
+
   //扣减金额，记录帐变
-  async reduceAmount(amount: number) {}
+  async reduceAmount(
+    after: number,
+    member: string,
+    amount: number,
+    before: number,
+    method: 'sub' | 'add',
+    type: 'other' | 'buy' | 'charge' | 'award' | 'withdraw',
+  ) {
+    //记录日志
+    this.memberWalletOperationsService.create(
+      member,
+      type,
+      amount,
+      before,
+      after,
+      method,
+    );
+    //操作金额
+    await this.memberModel.findByIdAndUpdate(member, {
+      $set: { amount: after },
+    });
+  }
 }

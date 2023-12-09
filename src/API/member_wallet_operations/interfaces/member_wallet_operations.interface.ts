@@ -7,4 +7,5 @@ export interface MemberWalletOperationInterface extends Document {
   before: string;
   after: string;
   time: string;
+  operation_method: 'add' | 'sub';
 }

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { MemberWalletOperationsService } from './member_wallet_operations.service';
 import { MemberWalletOperationsController } from './member_wallet_operations.controller';
 import { MemberWalletOperationSchema } from './schemas/member_wallet_operations.schema';
@@ -13,7 +13,7 @@ const table = MongooseModule.forFeature([
 ]);
 
 @Module({
-  imports: [table, MemberModule],
+  imports: [table, forwardRef(() => MemberModule)],
   controllers: [MemberWalletOperationsController],
   providers: [MemberWalletOperationsService],
   exports: [MemberWalletOperationsService],

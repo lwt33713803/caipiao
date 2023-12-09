@@ -1,8 +1,9 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { MemberService } from './member.service';
 import { MemberController } from './member.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MemberSchema } from './schemas/member.schema';
+import { MemberWalletOperationsModule } from 'src/API/member_wallet_operations/member_wallet_operations.module';
 
 const MemberTable = MongooseModule.forFeature([
   {
@@ -12,7 +13,7 @@ const MemberTable = MongooseModule.forFeature([
 ]);
 
 @Module({
-  imports: [MemberTable],
+  imports: [MemberTable, forwardRef(() => MemberWalletOperationsModule)],
   controllers: [MemberController],
   providers: [MemberService],
   exports: [MemberService],

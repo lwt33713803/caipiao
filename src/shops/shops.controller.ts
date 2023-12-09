@@ -1,24 +1,11 @@
-import {
-  Controller,
-  Get,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  Query,
-} from '@nestjs/common';
+import { Controller, Get, Post, Query } from '@nestjs/common';
 import { ShopsService } from './shops.service';
-import { ApiTags } from '@nestjs/swagger';
-import { UpdateShopDto } from './dto/update-shop.dto';
-
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('店铺信息')
 @Controller('shops')
 export class ShopsController {
   constructor(private readonly shopsService: ShopsService) {}
-
-
-
 
   @Get('info')
   async findMyInfo(@Query('shop_id') shop_id: string) {
@@ -41,5 +28,10 @@ export class ShopsController {
     return data.clerk_manage;
   }
 
-  
+  @ApiOperation({ summary: '商铺列表', description: '商铺列表' })
+  @Post('list')
+  async list() {
+    const data = await this.shopsService.findall();
+    return data;
+  }
 }

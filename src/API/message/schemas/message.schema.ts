@@ -14,7 +14,7 @@ export class Message extends Document {
   title: string;
   @Prop({ type: mongoose.Schema.Types.String, required: true })
   from: string;
-  @Prop({ type: mongoose.Schema.Types.String, required: true })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, required: true })
   to: string;
   @Prop({ type: mongoose.Schema.Types.String, required: true })
   content: string;
