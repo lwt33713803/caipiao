@@ -21,4 +21,6 @@ export interface MemberInterface extends Document {
     cardID: string;
     cardName: string;
   };
+  items?: any[];
+  order_id?: string; 
 }

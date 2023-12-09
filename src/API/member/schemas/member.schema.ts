@@ -55,6 +55,11 @@ export class Member extends Document {
     cardID: string;
     cardName: string;
   };
+
+  @Prop({ type: mongoose.Schema.Types.Mixed, required: false })
+  items: any;
+  @Prop({ type: mongoose.Schema.Types.String, required: false })
+  order_id: string;
 }
 
 export const MemberSchema = SchemaFactory.createForClass(Member);

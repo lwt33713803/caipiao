@@ -24,16 +24,20 @@ import mongoose from 'mongoose';
 export class UsersController {
   @Inject(UsersService)
   private readonly usersService: UsersService;
+  
   @Inject(LogService)
   private readonly logService: LogService;
 
+
   @Post('register')
   register(@Body() createUserDto: CreateUserDto) {
+    
     const token = this.usersService.createToken();
     const shop_id = new mongoose.Types.ObjectId().toString();
     createUserDto['token'] = token;
     createUserDto['shop_id'] = shop_id;
     createUserDto['state'] = '启用';
+
     return this.usersService.create(createUserDto);
   }
 
@@ -74,7 +78,6 @@ export class UsersController {
   @Post('login')
   async login(@Body() createUserDto: CreateUserDto, @Ip() ip: string) {
     const user = await this.usersService.getUserByName(createUserDto);
-    console.log('user',user)
     if (!user) {
       throw new HttpException('请输入正确的账户和密码', HttpStatus.BAD_REQUEST);
     }

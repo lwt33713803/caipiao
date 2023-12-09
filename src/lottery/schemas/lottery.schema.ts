@@ -11,12 +11,12 @@ export class Lottery extends Document {
   order_id: string;
   @Prop({ type: mongoose.Schema.Types.String, required: false })
   shop_id: string;
+  @Prop({ type: mongoose.Schema.Types.String, required: false })
+  user_id: string;
   @Prop({ type: mongoose.Schema.Types.Number, default: new Date() })
   update_time: Date;
   @Prop({ type: mongoose.Schema.Types.Number, default: new Date() })
   created_time: Date;
-  @Prop({ type: mongoose.Schema.Types.String, required: false })
-  user_id: string;
   @Prop({ type: mongoose.Schema.Types.Number, required: false })
   type: number;
   @Prop({ type: Array, required: false })
@@ -31,6 +31,8 @@ export class Lottery extends Document {
   winning_type: number;
   @Prop({ type: mongoose.Schema.Types.Number, required: false })
   winning_status: number;
+  @Prop({ type: mongoose.Schema.Types.String, required: false })
+  target: string;
 }
 
 export const LotterySchema = SchemaFactory.createForClass(Lottery);

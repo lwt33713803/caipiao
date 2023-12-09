@@ -13,6 +13,7 @@ import { LotteryService } from './lottery.service';
 import { CreateLotteryDto } from './dto/create-lottery.dto';
 import { UpdateLotteryDto } from './dto/update-lottery.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { UseLotteryDto } from './dto/use-lottery.dto';
 
 @ApiTags('派奖')
 @Controller('lottery')
@@ -31,9 +32,10 @@ export class LotteryController {
   }
 
   // 派奖
-  @Get('use')
-  useItem(@Query('id') id: string, @Query('shop_id') shop_id: string) {
-    return this.lotteryService.useItem(id, shop_id);
+  @Post('use')
+  useItem(@Body() useLotteryDto: UseLotteryDto) {
+    const { order_id, shop_id, user_id } = useLotteryDto;
+    return this.lotteryService.useItem(order_id, shop_id, user_id);
   }
 
   @Get(':id')

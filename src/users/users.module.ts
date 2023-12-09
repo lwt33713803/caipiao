@@ -4,6 +4,8 @@ import { UsersController } from './users.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UsersSchema } from './schemas/users.schema';
 import { LogModule } from '../log/log.module';
+import { LotteryTypesSchema } from '../lottery_types/schemas/lottery_types.schema';
+import { ShopsSchema } from '../shops/schemas/shops.schema';
 
 const UsersTable = MongooseModule.forFeature([
   {
@@ -12,8 +14,21 @@ const UsersTable = MongooseModule.forFeature([
   },
 ]);
 
+const LotteryTypesTable = MongooseModule.forFeature([
+  {
+    name: 'LotteryTypesModel',
+    schema: LotteryTypesSchema,
+  },
+]);
+const ShopsTable = MongooseModule.forFeature([
+  {
+    name: 'ShopsModel',
+    schema: ShopsSchema,
+  },
+]);
+
 @Module({
-  imports: [UsersTable, LogModule],
+  imports: [UsersTable, LotteryTypesTable, ShopsTable, LogModule],
   controllers: [UsersController],
   providers: [UsersService],
 })

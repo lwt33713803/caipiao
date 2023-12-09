@@ -1,9 +1,4 @@
-import {
-  IsString,
-  IsArray,
-  IsNumber,
-  IsDate,
-} from 'class-validator';
+import { IsString, IsArray, IsNumber, IsDate } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateLotteryDto {
@@ -12,36 +7,39 @@ export class CreateLotteryDto {
   order_id: string;
 
   @IsString()
-  @ApiProperty({ description: '用户_id', maxLength: 30 })
+  @ApiProperty({ description: '用户_id' })
   user_id: string;
 
+  @IsString()
+  @ApiProperty({ description: '商家_id' })
+  shop_id: string;
+
   @IsNumber()
-  @ApiProperty({ description: '彩种' })
+  @ApiProperty({ description: '彩种', required: false, })
   type: number;
 
   @IsArray()
-  @ApiProperty({ description: '中奖号' })
+  @ApiProperty({ description: '中奖号', required: false, })
   items: any[];
 
   @IsString()
-  @ApiProperty({ description: '下单时间' })
+  @ApiProperty({ description: '下单时间', required: false, })
   order_time: string;
 
   @IsString()
-  @ApiProperty({ description: '金额' })
+  @ApiProperty({ description: '金额' , required: false,})
   money: string;
 
-  
   @IsString()
-  @ApiProperty({ description: '中奖金额' })
+  @ApiProperty({ description: '中奖金额' , required: false,})
   winning: string;
 
   @IsNumber()
-  @ApiProperty({ description: '派奖类型' })
+  @ApiProperty({ description: '派奖类型', required: false, })
   winning_type: number;
 
   @IsNumber()
-  @ApiProperty({ description: '派奖状态' })
+  @ApiProperty({ description: '派奖状态', required: false, })
   winning_status: number;
 
   // @IsDate()

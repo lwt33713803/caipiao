@@ -8,16 +8,22 @@ import {
   Delete,
 } from '@nestjs/common';
 import { LotteryTypesService } from './lottery_types.service';
-import { CreateLotteryTypeDto } from './dto/create-lottery_type.dto';
+import {
+  CreateLotteryTypeDto,
+  defaultSystem,
+} from './dto/create-lottery_type.dto';
 import { UpdateLotteryTypeDto } from './dto/update-lottery_type.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('彩种管理')
 @Controller('lottery-types')
 export class LotteryTypesController {
   constructor(private readonly lotteryTypesService: LotteryTypesService) {}
 
   @Post()
   create(@Body() createLotteryTypeDto: CreateLotteryTypeDto) {
-    return this.lotteryTypesService.create(createLotteryTypeDto);
+    console.log(createLotteryTypeDto);
+    // return this.lotteryTypesService.create(createLotteryTypeDto);
   }
 
   @Get()

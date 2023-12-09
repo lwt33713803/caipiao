@@ -16,4 +16,5 @@ export interface OrderInterface extends Document {
   items: any;
   award_amount: number;
   img_url?: string;
+  service?: string;
 }

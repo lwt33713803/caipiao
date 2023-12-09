@@ -7,6 +7,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { OrderSchema } from '../order/schemas/order.schema';
 import { ShopsSchema } from '../shops/schemas/shops.schema';
 import { ShopsAccountSchema } from '../shops_account/schemas/shops_account.schema';
+import { MemberSchema } from 'src/API/member/schemas/member.schema';
 
 const LotteryTable = MongooseModule.forFeature([
   {
@@ -32,9 +33,21 @@ const ShopsAccountTable = MongooseModule.forFeature([
     schema: ShopsAccountSchema,
   },
 ]);
-
+const MemberTable = MongooseModule.forFeature([
+  {
+    name: 'member',
+    schema: MemberSchema,
+  },
+]);
 @Module({
-  imports: [LotteryTable, OrderTable,ShopsTable,ShopsAccountTable, LogModule],
+  imports: [
+    LotteryTable,
+    OrderTable,
+    ShopsTable,
+    ShopsAccountTable,
+    MemberTable,
+    LogModule,
+  ],
   controllers: [LotteryController],
   providers: [LotteryService],
 })
