@@ -1,13 +1,4 @@
-import {
-  Body,
-  Controller,
-  Headers,
-  Get,
-  Post,
-  Param,
-  Res,
-  Query,
-} from '@nestjs/common';
+import { Body, Controller, Headers, Get, Post, Query } from '@nestjs/common';
 import { OssService } from './oss.service';
 import { ApiTags } from '@nestjs/swagger';
 @ApiTags('oss模块')

@@ -10,7 +10,7 @@ export class OssService {
   private config: Record<string, any>;
   constructor() {
     this.config = {
-      region: 'oss-cn-qingdao',
+      region: 'oss-cn-beijing',
       accessKeyId: 'LTAI5tEikT2W81VR9pgNNwmQ',
       accessKeySecret: 'GYqTs1qkxMu7GmwfpchU1CmmT8OqxN',
       // 存储桶名字
@@ -41,9 +41,10 @@ export class OssService {
 
     // 生成签名，策略等信息
     const formData = await this.client.calculatePostSignature(policy);
-
     // bucket域名，客户端将向此地址发送请求
-    const location = await this.client.getBucketLocation('lgstorage');
+
+    const location = await this.client.getBucketLocation();
+
     const host = `http://${this.config.bucket}.${location.location}.aliyuncs.com`;
 
     // 上传回调。
