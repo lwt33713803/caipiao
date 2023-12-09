@@ -18,6 +18,7 @@ export class MemberWalletOperationsController {
   lists(@Body() getMemberWalletOperationDto: GetMemberWalletOperationDto) {
     return this.memberWalletOperationsService.findByToken(
       getMemberWalletOperationDto.token,
+      getMemberWalletOperationDto.type,
     );
   }
 }

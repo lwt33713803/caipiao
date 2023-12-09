@@ -1,18 +1,8 @@
-import {
-  Controller,
-  Get,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  Query,
-  Post,
-  Res,
-} from '@nestjs/common';
+import { Controller, Get, Body, Query, Post } from '@nestjs/common';
 import { ShopsService } from './shops.service';
-import { ApiTags } from '@nestjs/swagger';
-import { CreateShopDto, Recharge } from './dto/create-shop.dto';
+import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { ShopsInterface } from './interfaces/shops.interface';
+import { Recharge } from './dto/create-shop.dto';
 
 import { image } from 'qr-image';
 import * as qrcode from 'qrcode';
@@ -67,6 +57,12 @@ export class ShopsController {
     return data.clerk_manage;
   }
 
+  @ApiOperation({ summary: '商铺列表', description: '商铺列表' })
+  @Post('list')
+  async list() {
+    const data = await this.shopsService.findall();
+    return data;
+  }
   // 充值
   @Post('recharge')
   recharge(@Body() Recharge: Recharge) {

@@ -15,7 +15,7 @@ services:
     command: [nginx-debug, '-g', 'daemon off;']
     
   cp-api-manager:
-    image: node:20.10.0
+    image: node:20.10-alpine3.18
     container_name: cp-api
     restart: always
     volumes:

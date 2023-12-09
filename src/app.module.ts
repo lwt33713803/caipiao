@@ -22,6 +22,11 @@ import { MessageModule } from './API/message/message.module';
 import { MemberWalletOperationsModule } from './API/member_wallet_operations/member_wallet_operations.module';
 import { RegisterModule } from './register/register.module';
 import { OssModule } from './oss/oss.module';
+import { MemberShopsModule } from './API/member_shops/member_shops.module';
+import { MemberFeedbackModule } from './API/member-feedback/member-feedback.module';
+import { MemberChargeModule } from './API/member-charge/member-charge.module';
+import { MemberService } from './API/member/member.service';
+import { MemberWalletOperationsService } from './API/member_wallet_operations/member_wallet_operations.service';
 
 @Module({
   imports: [
@@ -46,7 +51,10 @@ import { OssModule } from './oss/oss.module';
     MessageModule,
     MemberWalletOperationsModule,
     RegisterModule,
-    OssModule
+    OssModule,
+    MemberShopsModule,
+    MemberFeedbackModule,
+    MemberChargeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

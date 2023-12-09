@@ -25,6 +25,9 @@ export class ShopsService {
     return this.ShopsModel.updateOne({ shop_id }, { $set: updateShopDto });
   }
 
+  findall() {
+    return this.ShopsModel.find();
+  }
   async recharge(id: string, num: number) {
     const data = await this.ShopsModel.findOne({ shop_id: id });
     await this.ShopsModel.updateOne(

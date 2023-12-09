@@ -18,6 +18,8 @@ export class MemberWalletOperation extends Document {
   after: string;
   @Prop({ type: mongoose.Schema.Types.String, required: true })
   time: string;
+  @Prop({ type: mongoose.Schema.Types.String, required: true })
+  operation_method: 'add' | 'sub';
 }
 
 export const MemberWalletOperationSchema = SchemaFactory.createForClass(

@@ -12,4 +12,11 @@ export class GetMemberWalletOperationDto extends PartialType(
   })
   @IsNotEmpty({ message: '登录失效，请重新登录' })
   token: string;
+
+  @ApiProperty({
+    example: 'buy',
+    required: false,
+    description: '类型',
+  })
+  type: string;
 }

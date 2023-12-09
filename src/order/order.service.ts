@@ -144,6 +144,7 @@ export class OrderService {
       status: 0,
       pay_status: 0,
       user_id: member._id,
+      user_name: member.name,
       items: apiCreateOrderDto.items,
       award_amount: 0,
       shop_id: '656c3cec388c800f22e0652b',

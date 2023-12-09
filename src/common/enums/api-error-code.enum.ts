@@ -7,6 +7,7 @@ export enum ApiErrorCode {
   ROLE_EXIST = 10005, //角色已存在
   ///////
   INVITE_CODE_NOT_EXISTS = 100006, //邀请码不存在
+  PASSWORD_ERRPR = 100007, //邀请码不存在
   TOKEN_INVALID = 999999,
 
   PASSWORD_ERROR = 20005, //密码错误

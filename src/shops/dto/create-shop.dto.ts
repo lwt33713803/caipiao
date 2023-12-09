@@ -22,7 +22,7 @@ export class CreateShopsAlipay {
   alipay_id: string;
 }
 
-export class Recharge{
+export class Recharge {
   id: string;
   num: number;
 }
@@ -34,9 +34,9 @@ export const defaultInfo = {
   setting: {
     register_flag: true,
     home_poster: true,
-    home_order_remind: true
+    home_order_remind: true,
   },
   user_manage: [],
   clerk_manage: [],
-  receipt_manage: {}
-}
+  receipt_manage: {},
+};

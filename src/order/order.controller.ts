@@ -120,9 +120,10 @@ export class OrderController {
     this.memberWalletOperationsService.create(
       member._id,
       'buy',
-      order.money.toString(),
-      before.toString(),
-      member.amount.toString(),
+      order.money,
+      before,
+      member.amount,
+      'sub',
     );
     //修改订单状态。
     order.pay_status = 1;

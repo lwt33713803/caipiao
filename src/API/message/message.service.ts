@@ -10,7 +10,8 @@ export class MessageService {
     private readonly messageModule: Model<MessageInterfaces>,
   ) {}
 
-  findMessageByMemberID(id: string) {
+  findMessageByMemberID(id: any) {
+    console.log(id);
     return this.messageModule.find({ to: id });
   }
 
