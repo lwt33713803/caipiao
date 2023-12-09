@@ -43,7 +43,7 @@ export class OrderService {
       { $and: [{ shop_id, status }] },
       { $and: [{ shop_id, status }, { type }] },
     ];
-    const sort_arr = [{ deadline: 1 }, { order_time: 1 }, { money: 1 }];
+    const sort_arr = [{ deadline: -1 }, { order_time: -1 }, { money: 1 }];
     const query = type === '0' ? arr[0] : arr[1];
     return await this.orderModel.find(query).sort(sort_arr[sort]).exec();
   }
@@ -61,7 +61,7 @@ export class OrderService {
 
   // 出票
   async drawer(acceptDto: AcceptDto) {
-    const { _id, shop_id } = acceptDto;
+    const { _id, shop_id, oss_key } = acceptDto;
     // 出票扣减手续费
     const shops = await this.ShopsModel.findOne({ shop_id });
     const order = await this.orderModel.findOne({ _id });
@@ -74,10 +74,7 @@ export class OrderService {
       { remaining_sum: remaining_sum - abatement },
     );
 
-    await this.orderModel.findOneAndUpdate(
-      { _id },
-      { status: 2, img_url: 'https://cdn.uviewui.com/uview/swiper/1.jpg' },
-    );
+    await this.orderModel.findOneAndUpdate({ _id }, { status: 2, oss_key });
     const account_data = {
       shop_id,
       money: abatement + '',
@@ -95,7 +92,7 @@ export class OrderService {
 
   async queryDrawer(shop_id: string, status: number) {
     const query = { $and: [{ shop_id, status }] };
-    return await this.orderModel.find(query).sort({ order_time: -1 }).exec();
+    return await this.orderModel.find(query).sort({ updateTime: -1 }).exec();
   }
 
   async orderDesc(shop_id: string, id: string) {

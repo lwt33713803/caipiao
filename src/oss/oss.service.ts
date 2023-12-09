@@ -10,17 +10,18 @@ export class OssService {
   private config: Record<string, any>;
   constructor() {
     this.config = {
+      // endpoint: "http://localhost:3002",
       region: 'oss-cn-beijing',
       accessKeyId: 'LTAI5tEikT2W81VR9pgNNwmQ',
       accessKeySecret: 'GYqTs1qkxMu7GmwfpchU1CmmT8OqxN',
       // 存储桶名字
       bucket: 'piao1994',
       // 文件存储路径
-      // dir: 'cad/',
+      dir: 'unload-img/',
       // 设置上传回调URL，即回调服务器地址，用于处理应用服务器与OSS之间的通信。
       // OSS会在文件上传完成后，把文件上传信息通过此回调URL发送给应用服务器。
       // 例如callbackUrl填写为https oss-demo.aliyuncs.com:23450。
-      callbackUrl: 'http://localhost:3000/oss/result',
+      callbackUrl: 'http://localhost:3002/oss/result',
     };
     this.client = new Client(<OSS.Options>this.config);
   }
@@ -42,9 +43,7 @@ export class OssService {
     // 生成签名，策略等信息
     const formData = await this.client.calculatePostSignature(policy);
     // bucket域名，客户端将向此地址发送请求
-
-    const location = await this.client.getBucketLocation();
-
+    const location = await this.client.getBucketLocation('piao1994');
     const host = `http://${this.config.bucket}.${location.location}.aliyuncs.com`;
 
     // 上传回调。
