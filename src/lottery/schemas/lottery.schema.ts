@@ -33,6 +33,12 @@ export class Lottery extends Document {
   winning_status: number;
   @Prop({ type: mongoose.Schema.Types.String, required: false })
   target: string;
+  // 期号
+  @Prop({ type: mongoose.Schema.Types.String, required: false })
+  expect: string;
+  // 开奖时间
+  @Prop({ type: mongoose.Schema.Types.String, required: false })
+  time: string;
 }
 
 export const LotterySchema = SchemaFactory.createForClass(Lottery);

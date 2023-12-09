@@ -21,6 +21,7 @@ import { LotteryTypesModule } from './lottery_types/lottery_types.module';
 import { MessageModule } from './API/message/message.module';
 import { MemberWalletOperationsModule } from './API/member_wallet_operations/member_wallet_operations.module';
 import { RegisterModule } from './register/register.module';
+import { OssModule } from './oss/oss.module';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { RegisterModule } from './register/register.module';
     MessageModule,
     MemberWalletOperationsModule,
     RegisterModule,
+    OssModule
   ],
   controllers: [AppController],
   providers: [AppService],
