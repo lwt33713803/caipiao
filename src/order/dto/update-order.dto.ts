@@ -15,4 +15,7 @@ export class AcceptDto {
 
   @ApiProperty({ required: false, description: '商家ID' })
   shop_id?: string;
+
+  @ApiProperty({ required: false, description: 'oss 图片key' })
+  oss_key?: string;
 }

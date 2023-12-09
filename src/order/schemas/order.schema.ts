@@ -36,8 +36,8 @@ export class Order extends Document {
   @Prop({ type: mongoose.Schema.Types.Number })
   award_amount: number;
 
-  @Prop({ type: mongoose.Schema.Types.String })
-  img_url: string;
+  @Prop({ type: mongoose.Schema.Types.String, required: false })
+  oss_key: string;
   @Prop({ type: mongoose.Schema.Types.String, required: false })
   service: string;
 }
