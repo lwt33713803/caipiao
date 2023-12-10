@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param } from '@nestjs/common';
 import { MemberShopsService } from './member_shops.service';
 import { CreateMemberShopDto } from './dto/create-member_shop.dto';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -9,6 +9,12 @@ import { DetailMemberShopDto } from './dto/detail-member_shop.dto';
 @Controller('member-shops')
 export class MemberShopsController {
   constructor(private readonly memberShopsService: MemberShopsService) {}
+
+  @ApiOperation({ summary: '商家查看用户列表', description: '商铺绑定' })
+  @Get('list/:shop_id')
+  userList(@Param('shop_id') shop_id: string) {
+    return this.memberShopsService.findAll(shop_id);
+  }
 
   @ApiBody({
     type: CreateMemberShopDto,

@@ -19,6 +19,10 @@ export class MemberShopsService {
     private readonly shopsService: ShopsService,
   ) {}
 
+  async findAll(shop_id: string) {
+    return await this.memberShopModel.find({ shop_id }).exec();
+  }
+
   async bind(createMemberShopDto: CreateMemberShopDto) {
     const member = await this.memberService.info(createMemberShopDto.token);
     if (!member) {
