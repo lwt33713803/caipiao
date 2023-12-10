@@ -28,6 +28,14 @@ export class ApiCreateOrderDto extends PartialType(CreateOrderDto) {
   numbers: number;
 
   @ApiProperty({
+    example: 7,
+    required: true,
+    description: '店铺ID',
+  })
+  @IsNotEmpty({ message: '店铺ID' })
+  shop_id: string;
+
+  @ApiProperty({
     example: [
       {
         codes: '1,2,3,4,5',

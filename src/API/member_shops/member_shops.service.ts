@@ -45,6 +45,7 @@ export class MemberShopsService {
       shop_id: createMemberShopDto.shop_id,
       shop_name: shop['shop_name'],
       member_id: member._id,
+      user_name: member.name,
     });
   }
 
