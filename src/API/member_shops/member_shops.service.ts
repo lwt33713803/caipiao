@@ -27,8 +27,7 @@ export class MemberShopsService {
         ApiErrorCode.TOKEN_INVALID,
       );
     }
-    const shop_id = createMemberShopDto.shop_id.split('=');
-    const shop = await this.shopsService.myInfo(shop_id[1]);
+    const shop = await this.shopsService.myInfo(createMemberShopDto.shop_id);
     if (!shop) {
       throw new ApiException(
         '店铺查询失败，请重新扫描',
