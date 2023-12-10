@@ -24,20 +24,18 @@ import mongoose from 'mongoose';
 export class UsersController {
   @Inject(UsersService)
   private readonly usersService: UsersService;
-  
+
   @Inject(LogService)
   private readonly logService: LogService;
 
-
   @Post('register')
   register(@Body() createUserDto: CreateUserDto) {
-    
     const token = this.usersService.createToken();
     const shop_id = new mongoose.Types.ObjectId().toString();
     createUserDto['token'] = token;
     createUserDto['shop_id'] = shop_id;
     createUserDto['state'] = '启用';
-
+    createUserDto['audit'] = false;
     return this.usersService.create(createUserDto);
   }
 
@@ -81,6 +79,9 @@ export class UsersController {
     if (!user) {
       throw new HttpException('请输入正确的账户和密码', HttpStatus.BAD_REQUEST);
     }
+    if (!user.audit) {
+      throw new HttpException('账号审核未通过', HttpStatus.BAD_REQUEST);
+    }
     //生成token
     const token = this.usersService.createToken();
     //记录登录日志
@@ -91,8 +92,7 @@ export class UsersController {
     return {
       token: token,
       name: user.name,
-      avatar:
-        'https://cdn.learnku.com//uploads/communities/WtC3cPLHzMbKRSZnagU9.png!/both/44x44',
+      avatar: 'https://piao1994.oss-cn-beijing.aliyuncs.com/element/demo.png',
       email: 'Ronnie@123.com',
       role: ['admin'],
       shop_id: user.shop_id,

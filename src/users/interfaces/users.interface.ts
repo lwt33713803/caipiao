@@ -7,4 +7,6 @@ export interface UsersInterface extends Document {
   avatar: string;
   state: string;
   shop_id: string;
+  shop_name?: string;
+  audit?: boolean;
 }

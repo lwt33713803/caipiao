@@ -51,7 +51,6 @@ export class OrderService {
   // 接单
   async accept(acceptDto: AcceptDto) {
     const { _id } = acceptDto;
-    console.log('_id', _id);
     return await this.orderModel.findOneAndUpdate(
       { _id },
       // service：手续费 暂时写死
@@ -83,7 +82,6 @@ export class OrderService {
       order_id: _id.toString(),
       user_id,
     };
-    console.log(`account_data`, account_data);
     await this.ShopsAccountModel.create(account_data);
     return '出票成功';
 
