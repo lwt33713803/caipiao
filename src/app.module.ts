@@ -27,6 +27,7 @@ import { MemberFeedbackModule } from './API/member-feedback/member-feedback.modu
 import { MemberChargeModule } from './API/member-charge/member-charge.module';
 import { MemberService } from './API/member/member.service';
 import { MemberWalletOperationsService } from './API/member_wallet_operations/member_wallet_operations.service';
+import { MemberWithdrawModule } from './API/member-withdraw/member-withdraw.module';
 
 @Module({
   imports: [
@@ -55,6 +56,7 @@ import { MemberWalletOperationsService } from './API/member_wallet_operations/me
     MemberShopsModule,
     MemberFeedbackModule,
     MemberChargeModule,
+    MemberWithdrawModule,
   ],
   controllers: [AppController],
   providers: [AppService],

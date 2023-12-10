@@ -42,7 +42,6 @@ export class OssService {
 
     // 生成签名，策略等信息
     const formData = await this.client.calculatePostSignature(policy);
-
     // bucket域名，客户端将向此地址发送请求
     const location = await this.client.getBucketLocation('piao1994');
     const host = `http://${this.config.bucket}.${location.location}.aliyuncs.com`;
