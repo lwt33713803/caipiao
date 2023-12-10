@@ -142,7 +142,7 @@ export class OrderService {
       user_name: member.name,
       items: apiCreateOrderDto.items,
       award_amount: 0,
-      shop_id: '',
+      shop_id: apiCreateOrderDto.shop_id,
       expect: apiCreateOrderDto.numbers,
     });
   }
