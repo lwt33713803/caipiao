@@ -19,8 +19,10 @@ export class Order extends Document {
   type: number;
   @Prop({ type: mongoose.Schema.Types.Number, required: false })
   pay_status: number;
+   // 下单用户ID
   @Prop({ type: mongoose.Schema.Types.String, required: false })
   user_id: string;
+  // 下单用户名
   @Prop({ type: mongoose.Schema.Types.String, required: false })
   user_name: string;
   @Prop({ type: mongoose.Schema.Types.String, required: false })
@@ -35,11 +37,15 @@ export class Order extends Document {
   items: any;
   @Prop({ type: mongoose.Schema.Types.Number })
   award_amount: number;
-
+  // oss
   @Prop({ type: mongoose.Schema.Types.String, required: false })
   oss_key: string;
+  // 手续费
   @Prop({ type: mongoose.Schema.Types.String, required: false })
   service: string;
+  // 订单类型 0: 单买、1：跟单
+  @Prop({ type: mongoose.Schema.Types.String, required: false })
+  order_type: string;
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);

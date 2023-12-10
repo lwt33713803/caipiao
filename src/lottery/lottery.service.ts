@@ -36,7 +36,6 @@ export class LotteryService {
   ) {}
 
   create(createLotteryDto: CreateLotteryDto) {
-    console.log(`createLotteryDto`, createLotteryDto);
     return 'This action adds a new lottery';
   }
 

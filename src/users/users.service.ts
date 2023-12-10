@@ -27,19 +27,21 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    const { name, shop_id } = createUserDto;
+    const { name, shop_id, shop_name } = createUserDto;
     const data = await this.usrsModel.findOne({ name });
     if (!data) {
       defaultSystem['shop_id'] = shop_id;
+      defaultSystem['shop_name'] = shop_name;
       defaultInfo['shop_id'] = shop_id;
+      defaultInfo['shop_name'] = shop_name;
       // 添加 彩种设置
       this.lotteryTypesModule.create(defaultSystem);
       // 添加 个人信息
       this.ShopsModel.create(defaultInfo);
       this.usrsModel.create(createUserDto);
-      return '注册成功'
+      return '注册成功';
     }
-    throw new ApiException('用户已存在', ApiErrorCode.USER_EXIST);
+    throw new ApiException('用户已存在', ApiErrorCode.FORBIDDEN);
   }
 
   update(updateUserDto: UpdateUserDto) {
