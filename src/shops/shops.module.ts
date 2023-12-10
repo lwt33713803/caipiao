@@ -12,11 +12,10 @@ const ShopsTable = MongooseModule.forFeature([
   },
 ]);
 
-
-
 @Module({
   imports: [ShopsTable, LogModule],
   controllers: [ShopsController],
   providers: [ShopsService],
+  exports: [ShopsService],
 })
 export class ShopsModule {}
