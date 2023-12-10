@@ -129,38 +129,37 @@ export class LotteryService {
     const { items } = lottery;
     // 中奖金额
     const winning = Number(lottery.winning);
-
-    // if (remaining_sum > winning) {
-    //   // 订单状态: winning_status 1 已派奖
-    //   await this.LotteryModel.updateOne(
-    //     { order_id },
-    //     { $set: { winning_status: 1 } },
-    //   );
-    //   // 更新 个人信息表
-    //   await this.ShopsModel.updateOne(
-    //     { shop_id },
-    //     { $set: { remaining_sum: remaining_sum - winning } },
-    //   );
-    //   // 更新 member (增加: 金额、中奖信息、订单号)
-    //   await this.memberModel.updateOne(
-    //     { _id: user_id },
-    //     { $set: { amount: amount + winning, items, order_id } },
-    //   );
-    //   console.log('member', member);
-    //   // 添加 账户明细-扣款信息
-    //   const account_data = {
-    //     shop_id,
-    //     money: winning + '',
-    //     type: 0, // 0: 扣、1：充
-    //     order_type: lottery['type'],
-    //     order_id: lottery['_id'].toString(),
-    //     user_id: lottery['user_id'],
-    //   };
-    //   await this.ShopsAccountModel.create(account_data);
-    //   return '派奖成功';
-    // }
-    // // 当前账户余额不支持扣款
-    // throw new ApiException('当前余额不足', ApiErrorCode.ROLE_EXIST);
+    if (remaining_sum > winning) {
+      // 订单状态: winning_status 1 已派奖
+      await this.LotteryModel.updateOne(
+        { order_id },
+        { $set: { winning_status: 1 } },
+      );
+      // 更新 个人信息表
+      await this.ShopsModel.updateOne(
+        { shop_id },
+        { $set: { remaining_sum: remaining_sum - winning } },
+      );
+      // 更新 member (增加: 金额、中奖信息、订单号)
+      await this.memberModel.updateOne(
+        { _id: user_id },
+        { $set: { amount: amount + winning, items, order_id } },
+      );
+      console.log('member', member);
+      // 添加 账户明细-扣款信息
+      const account_data = {
+        shop_id,
+        money: winning + '',
+        type: 0, // 0: 扣、1：充
+        order_type: lottery['type'],
+        order_id: lottery['_id'].toString(),
+        user_id: lottery['user_id'],
+      };
+      await this.ShopsAccountModel.create(account_data);
+      return '派奖成功';
+    }
+    // 当前账户余额不支持扣款
+    throw new ApiException('当前余额不足', ApiErrorCode.ROLE_EXIST);
   }
 
   async checkPl5() {
