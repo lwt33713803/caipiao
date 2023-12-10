@@ -17,4 +17,5 @@ export interface OrderInterface extends Document {
   award_amount: number;
   oss_key?: string;
   service?: string;
+  expect: number;
 }

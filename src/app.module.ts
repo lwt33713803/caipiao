@@ -28,7 +28,7 @@ import { MemberChargeModule } from './API/member-charge/member-charge.module';
 import { MemberService } from './API/member/member.service';
 import { MemberWalletOperationsService } from './API/member_wallet_operations/member_wallet_operations.service';
 import { MemberWithdrawModule } from './API/member-withdraw/member-withdraw.module';
-import { FollowModule } from './follow/follow.module';
+import { FollowModule } from './API/follow/follow.module';
 
 @Module({
   imports: [

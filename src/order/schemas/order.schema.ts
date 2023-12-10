@@ -19,7 +19,7 @@ export class Order extends Document {
   type: number;
   @Prop({ type: mongoose.Schema.Types.Number, required: false })
   pay_status: number;
-   // 下单用户ID
+  // 下单用户ID
   @Prop({ type: mongoose.Schema.Types.String, required: false })
   user_id: string;
   // 下单用户名
@@ -44,8 +44,11 @@ export class Order extends Document {
   @Prop({ type: mongoose.Schema.Types.String, required: false })
   service: string;
   // 订单类型 0: 单买、1：跟单
-  @Prop({ type: mongoose.Schema.Types.String, required: false })
+  @Prop({ type: mongoose.Schema.Types.String, required: false, default: 0 })
   order_type: string;
+  // 期号
+  @Prop({ type: mongoose.Schema.Types.String, required: false })
+  expect: string;
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);
