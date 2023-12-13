@@ -31,6 +31,7 @@ export class MemberWithdrawService {
       member: member._id,
       amount: createMemberWithdrawDto.amount,
       state: 0,
+      account: createMemberWithdrawDto.account,
       create_time: Date.now(),
     });
 

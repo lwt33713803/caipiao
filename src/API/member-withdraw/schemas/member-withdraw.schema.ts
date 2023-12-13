@@ -16,6 +16,8 @@ export class MemberWithdraw extends Document {
   @Prop({ type: mongoose.Schema.Types.String, required: true })
   state: string;
   @Prop({ type: mongoose.Schema.Types.String, required: true })
+  account: string;
+  @Prop({ type: mongoose.Schema.Types.String, required: true })
   create_time: string;
 }
 

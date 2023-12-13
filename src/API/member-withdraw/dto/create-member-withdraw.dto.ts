@@ -17,4 +17,12 @@ export class CreateMemberWithdrawDto {
   })
   @IsNotEmpty({ message: '请填写提现金额' })
   amount: number;
+
+  @ApiProperty({
+    example: '微信',
+    required: true,
+    description: '提现方式',
+  })
+  @IsNotEmpty({ message: '请选择提现方式' })
+  account: string;
 }
