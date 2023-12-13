@@ -24,10 +24,14 @@ export class ShopsAccount extends Document {
   @Prop({ type: mongoose.Schema.Types.Number, required: false })
   order_type: number;
 
-  @Prop({ type: mongoose.Schema.Types.String, required: true })
+  // 操作类型 0 充值、1 派奖、2 手续费
+  @Prop({ type: mongoose.Schema.Types.Number, required: true })
+  typeid: number;
+
+  @Prop({ type: mongoose.Schema.Types.String, required: false })
   order_id: string;
 
-  @Prop({ type: mongoose.Schema.Types.String, required: true })
+  @Prop({ type: mongoose.Schema.Types.String, required: false })
   user_id: string;
 
   @Prop({ type: mongoose.Schema.Types.Number, default: new Date() })

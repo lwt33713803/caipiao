@@ -6,6 +6,7 @@ import { UsersSchema } from './schemas/users.schema';
 import { LogModule } from '../log/log.module';
 import { LotteryTypesSchema } from '../lottery_types/schemas/lottery_types.schema';
 import { ShopsSchema } from '../shops/schemas/shops.schema';
+import { ClerkSchema } from 'src/clerk/schemas/clerk.schema';
 
 const UsersTable = MongooseModule.forFeature([
   {
@@ -27,8 +28,15 @@ const ShopsTable = MongooseModule.forFeature([
   },
 ]);
 
+const ClerkTable = MongooseModule.forFeature([
+  {
+    name: 'ClerkModel',
+    schema: ClerkSchema,
+  },
+]);
+
 @Module({
-  imports: [UsersTable, LotteryTypesTable, ShopsTable, LogModule],
+  imports: [UsersTable, LotteryTypesTable, ShopsTable, ClerkTable, LogModule],
   controllers: [UsersController],
   providers: [UsersService],
 })

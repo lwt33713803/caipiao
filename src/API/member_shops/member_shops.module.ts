@@ -4,6 +4,7 @@ import { MemberShopsController } from './member_shops.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MemberModule } from '../member/member.module';
 import { ShopsModule } from '../../shops/shops.module';
+import { AgencyModule } from '../../agency/agency.module';
 import { MemberShopSchema } from './schemas/member_shop.schema';
 
 const table = MongooseModule.forFeature([
@@ -14,7 +15,7 @@ const table = MongooseModule.forFeature([
 ]);
 
 @Module({
-  imports: [table, MemberModule, ShopsModule],
+  imports: [table, MemberModule, ShopsModule, AgencyModule],
   controllers: [MemberShopsController],
   providers: [MemberShopsService],
 })

@@ -38,18 +38,5 @@ export class LotteryController {
     return this.lotteryService.useItem(order_id, shop_id, user_id);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.lotteryService.findOne(+id);
-  }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateLotteryDto: UpdateLotteryDto) {
-    return this.lotteryService.update(+id, updateLotteryDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.lotteryService.remove(+id);
-  }
 }

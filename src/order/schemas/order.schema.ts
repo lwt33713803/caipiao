@@ -31,8 +31,8 @@ export class Order extends Document {
   money: string;
   @Prop({ type: mongoose.Schema.Types.String })
   createTime: string;
-  @Prop({ type: mongoose.Schema.Types.String, default: Date.now() })
-  updateTime: string;
+  @Prop({ type: mongoose.Schema.Types.Date, default: Date.now() })
+  updateTime: Date;
   @Prop({ type: mongoose.Schema.Types.Mixed })
   items: any;
   @Prop({ type: mongoose.Schema.Types.Number })

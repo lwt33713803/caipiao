@@ -12,6 +12,7 @@ import { LotteryTypes } from '../lottery_types/schemas/lottery_types.schema';
 import { defaultSystem } from '../lottery_types/dto/create-lottery_type.dto';
 import { Shops } from '../shops/schemas/shops.schema';
 import { defaultInfo } from '../shops/dto/create-shop.dto';
+import { Clerk } from 'src/clerk/schemas/clerk.schema';
 
 @Injectable()
 export class UsersService {
@@ -24,6 +25,8 @@ export class UsersService {
 
     @InjectModel('ShopsModel')
     private readonly ShopsModel: Model<Shops>,
+
+    @InjectModel('ClerkModel') private readonly clerkModel: Model<Clerk>,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
@@ -65,8 +68,38 @@ export class UsersService {
     return this.usrsModel.count();
   }
 
-  getUserByName(user: CreateUserDto) {
+  getShopsByName(user: CreateUserDto) {
     return this.usrsModel.findOne({ name: user.name, password: user.password });
+  }
+
+  async findStaffBindShops(shop_id) {
+    return this.usrsModel.findOne({ shop_id });
+  }
+
+  async getStaffByName(createStaffDto) {
+    const {
+      staff_name: clerk_name,
+      staff_phone: clerk_phone,
+      staff_password: clerk_password,
+    } = createStaffDto;
+
+    return await this.clerkModel.findOne({
+      clerk_name,
+      clerk_phone,
+      clerk_password,
+    });
+
+    // console.log('createStaffDto', createStaffDto);
+
+    // const clerk = await this.clerkModel.findOne({
+    //   clerk_name,
+    //   clerk_phone,
+    //   clerk_password,
+    // });
+    // if (!clerk) {
+    //   throw new ApiException('填写信息有无', ApiErrorCode.FORBIDDEN);
+    // }
+    // const { shop_id } = clerk;
   }
 
   getOneByToken(token: string) {

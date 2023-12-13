@@ -17,6 +17,8 @@ export class MemberShop extends Document {
   shop_name: string;
   @Prop({ type: mongoose.Schema.Types.String, required: true })
   user_name: string;
+  @Prop({ type: mongoose.Schema.Types.Number, required: true })
+  user_status: number;
 }
 
 export const MemberShopSchema = SchemaFactory.createForClass(MemberShop);

@@ -4,6 +4,7 @@ import { CreateMemberShopDto } from './dto/create-member_shop.dto';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ListMemberShopDto } from './dto/list-member_shop.dto';
 import { DetailMemberShopDto } from './dto/detail-member_shop.dto';
+import { BindSubordinate } from './dto/bind-subordinate.dto';
 
 @ApiTags('商铺绑定')
 @Controller('member-shops')
@@ -23,6 +24,15 @@ export class MemberShopsController {
   @Post('bind')
   bind(@Body() createMemberShopDto: CreateMemberShopDto) {
     return this.memberShopsService.bind(createMemberShopDto);
+  }
+
+  @ApiBody({
+    type: BindSubordinate,
+  })
+  @ApiOperation({ summary: '绑定代理', description: '商铺绑定' })
+  @Post('subordinate')
+  bindSubordinate(@Body() bindSubordinate: BindSubordinate) {
+    return this.memberShopsService.subordinate(bindSubordinate);
   }
 
   @ApiBody({

@@ -81,6 +81,7 @@ export class OrderService {
       order_type: type,
       order_id: _id.toString(),
       user_id,
+      typeid: 2
     };
     await this.ShopsAccountModel.create(account_data);
     return '出票成功';

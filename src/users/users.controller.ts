@@ -12,7 +12,7 @@ import {
   Param,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
+import { CreateStaffDto, CreateUserDto } from './dto/create-user.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { LogService } from '../log/log.service';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -75,27 +75,59 @@ export class UsersController {
 
   @Post('login')
   async login(@Body() createUserDto: CreateUserDto, @Ip() ip: string) {
-    const user = await this.usersService.getUserByName(createUserDto);
-    if (!user) {
+    const shops = await this.usersService.getShopsByName(createUserDto);
+    if (!shops) {
       throw new HttpException('请输入正确的账户和密码', HttpStatus.BAD_REQUEST);
     }
-    if (!user.audit) {
+    if (!shops.audit) {
       throw new HttpException('账号审核未通过', HttpStatus.BAD_REQUEST);
     }
     //生成token
     const token = this.usersService.createToken();
     //记录登录日志
-    this.logService.loginSuccessLog(user, ip, createUserDto);
+    this.logService.loginSuccessLog(shops, ip, createUserDto);
     //存储当前token到用户信息
-    this.usersService.setTokenToUser(token, user.id);
+    this.usersService.setTokenToUser(token, shops.id);
     //返回信息
     return {
       token: token,
-      name: user.name,
+      name: shops.name,
       avatar: 'https://piao1994.oss-cn-beijing.aliyuncs.com/element/demo.png',
       email: 'Ronnie@123.com',
       role: ['admin'],
-      shop_id: user.shop_id,
+      shop_id: shops.shop_id,
+    };
+  }
+
+  @Post('staff-login')
+  async staffLogin(@Body() createStaffDto: CreateStaffDto, @Ip() ip: string) {
+    const { staff_name } = createStaffDto;
+    const staff = await this.usersService.getStaffByName(createStaffDto);
+    if (!staff)
+      throw new HttpException('输入用户信息有误', HttpStatus.BAD_REQUEST);
+    const { shop_id } = staff;
+    const shops = await this.usersService.findStaffBindShops(shop_id);
+    if (!shops)
+      throw new HttpException('无法查到商铺信息', HttpStatus.BAD_REQUEST);
+    const createUserDto = {
+      name: shops.name,
+      password: shops.password,
+    };
+    //生成token
+    const token = this.usersService.createToken();
+    //记录登录日志
+    this.logService.loginSuccessLog(shops, ip, createUserDto);
+    //存储当前token到用户信息
+    this.usersService.setTokenToUser(token, shops.id);
+    //返回信息
+    return {
+      token: token,
+      name: shops.name,
+      avatar: 'https://piao1994.oss-cn-beijing.aliyuncs.com/element/demo.png',
+      email: 'Ronnie@123.com',
+      role: ['staff'],
+      shop_id,
+      staff_name
     };
   }
 

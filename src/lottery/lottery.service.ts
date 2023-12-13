@@ -43,17 +43,7 @@ export class LotteryService {
     return await this.LotteryModel.find({ shop_id, winning_type: type }).exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} lottery`;
-  }
 
-  update(id: number, updateLotteryDto: UpdateLotteryDto) {
-    return `This action updates a #${id} lottery`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} lottery`;
-  }
 
   // 每天21-22点 每5分钟执行一次
   @Cron('0 0/5 21,22 * * *')
@@ -154,6 +144,7 @@ export class LotteryService {
         order_type: lottery['type'],
         order_id: lottery['_id'].toString(),
         user_id: lottery['user_id'],
+        typeid: 1,
       };
       await this.ShopsAccountModel.create(account_data);
       return '派奖成功';

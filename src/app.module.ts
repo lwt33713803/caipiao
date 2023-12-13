@@ -29,6 +29,7 @@ import { MemberService } from './API/member/member.service';
 import { MemberWalletOperationsService } from './API/member_wallet_operations/member_wallet_operations.service';
 import { MemberWithdrawModule } from './API/member-withdraw/member-withdraw.module';
 import { FollowModule } from './API/follow/follow.module';
+import { AgencyModule } from './agency/agency.module';
 
 @Module({
   imports: [
@@ -59,6 +60,7 @@ import { FollowModule } from './API/follow/follow.module';
     MemberChargeModule,
     MemberWithdrawModule,
     FollowModule,
+    AgencyModule,
   ],
   controllers: [AppController],
   providers: [AppService],
