@@ -1,7 +1,6 @@
 import * as mongoose from 'mongoose';
 import { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { CreateShopsClerk } from '../dto/create-shop.dto';
 
 @Schema({
   collection: 'shops',

@@ -11,6 +11,8 @@ import { ListMemberShopDto } from './dto/list-member_shop.dto';
 import { DetailMemberShopDto } from './dto/detail-member_shop.dto';
 import { BindSubordinate } from './dto/bind-subordinate.dto';
 import { AgencyService } from '../../agency/agency.service';
+import { ShopCategiriesDto } from './dto/shop-categories.dto';
+import { LotteryTypesService } from 'src/lottery_types/lottery_types.service';
 
 @Injectable()
 export class MemberShopsService {
@@ -20,6 +22,7 @@ export class MemberShopsService {
     private readonly memberService: MemberService,
     private readonly shopsService: ShopsService,
     private readonly agencyService: AgencyService,
+    private readonly lotteryTypes: LotteryTypesService,
   ) {}
 
   async findAll(shop_id: string) {
@@ -52,8 +55,13 @@ export class MemberShopsService {
         ApiErrorCode.FORBIDDEN,
       );
     }
-    console.log(shop);
 
+    //判断是不佛海已经绑定
+    const my_shop = await this.findAll(createMemberShopDto.shop_id);
+    console.log(my_shop);
+    if (my_shop.length > 0) {
+      throw new ApiException('店铺已经绑定', ApiErrorCode.FORBIDDEN);
+    }
     return this.memberShopModel.create({
       shop_id: createMemberShopDto.shop_id,
       shop_name: shop['shop_name'],
@@ -72,9 +80,22 @@ export class MemberShopsService {
         ApiErrorCode.TOKEN_INVALID,
       );
     }
+
     return this.memberShopModel.find({
       member_id: member._id,
     });
+  }
+
+  async categories(shopCategiriesDto: ShopCategiriesDto) {
+    const member = await this.memberService.info(shopCategiriesDto.token);
+    if (!member) {
+      throw new ApiException(
+        '获取失败，请重新登录',
+        ApiErrorCode.TOKEN_INVALID,
+      );
+    }
+    const categories = this.lotteryTypes.findOne(shopCategiriesDto.shop_id);
+    return categories;
   }
 
   async detail(detailMemberShopDto: DetailMemberShopDto) {

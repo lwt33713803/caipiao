@@ -13,7 +13,7 @@ export class LotteryTypesService {
   ) {}
 
   create(createLotteryTypeDto: CreateLotteryTypeDto) {
-    console.log(createLotteryTypeDto)
+    console.log(createLotteryTypeDto);
     return 'This action adds a new lotteryType';
   }
 
@@ -40,7 +40,7 @@ export class LotteryTypesService {
       'six_matches',
     ];
     const key = arr[type - 1];
-    let query = {};
+    const query = {};
     query[key] = updateLotteryTypeDto;
     console.log(query);
     return await this.LotteryTypesModel.updateOne(

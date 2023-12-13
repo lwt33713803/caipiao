@@ -5,4 +5,5 @@ export interface MemberShopInterface extends Document {
   shop_id: string;
   shop_name: string;
   user_name: string;
+  create_time: string;
 }

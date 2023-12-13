@@ -11,7 +11,10 @@ export class MemberShop extends Document {
     required: true,
   })
   member_id: string;
-  @Prop({ type: mongoose.Schema.Types.String, required: true })
+  @Prop({
+    type: mongoose.Schema.Types.String,
+    required: true,
+  })
   shop_id: string;
   @Prop({ type: mongoose.Schema.Types.String, required: true })
   shop_name: string;
@@ -19,6 +22,12 @@ export class MemberShop extends Document {
   user_name: string;
   @Prop({ type: mongoose.Schema.Types.Number, required: true })
   user_status: number;
+  @Prop({
+    type: mongoose.Schema.Types.String,
+    required: false,
+    default: Math.floor(Date.now() / 1000),
+  })
+  crete_time: string;
 }
 
 export const MemberShopSchema = SchemaFactory.createForClass(MemberShop);

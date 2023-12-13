@@ -13,6 +13,9 @@ import { encryptPassword } from 'src/common/utils/erypto';
 import { ChangeCertDto } from './dto/change-cert.dto';
 import { ChangePhoneDto } from './dto/change-phone.dto';
 import { TransferDto } from './dto/transfer.dto';
+import { BindWechartDto } from './dto/bind-wechart.dto';
+import { BindBankDto } from './dto/bind-bank.dto';
+import { GetMemberSubtotalsDto } from './dto/get-member-subtotals.dto';
 
 @ApiTags('APP会员管理')
 @Controller('member')
@@ -225,6 +228,87 @@ export class MemberController {
     member.phone = changeNickDto.phone;
     member.save();
     return 'success';
+  }
+
+  @ApiBody({
+    type: BindWechartDto,
+  })
+  @ApiOperation({ summary: '绑定微信', description: '绑定微信' })
+  @Post('bindWechart')
+  async bindWechart(@Body() bindWechartDto: BindWechartDto) {
+    if (bindWechartDto.token == '') {
+      throw new ApiException(
+        '登录失效，请重新登录',
+        ApiErrorCode.TOKEN_INVALID,
+      );
+    }
+    const member = await this.memberService.info(bindWechartDto.token);
+    if (!member) {
+      throw new ApiException(
+        '登录失效，请重新登录',
+        ApiErrorCode.TOKEN_INVALID,
+      );
+    }
+
+    member.third_accounts = {
+      ali: bindWechartDto.ali,
+      wechart: bindWechartDto.wechart,
+    };
+    member.save();
+    return 'success';
+  }
+
+  @ApiBody({
+    type: BindBankDto,
+  })
+  @ApiOperation({ summary: '绑定银行卡', description: '绑定银行卡' })
+  @Post('bindBank')
+  async bindBank(@Body() bindBankDto: BindBankDto) {
+    if (bindBankDto.token == '') {
+      throw new ApiException(
+        '登录失效，请重新登录',
+        ApiErrorCode.TOKEN_INVALID,
+      );
+    }
+    const member = await this.memberService.info(bindBankDto.token);
+    if (!member) {
+      throw new ApiException(
+        '登录失效，请重新登录',
+        ApiErrorCode.TOKEN_INVALID,
+      );
+    }
+
+    member.bank_info = {
+      bank_name: bindBankDto.bank_name,
+      bank_open: bindBankDto.bank_open,
+      name: bindBankDto.name,
+      account: bindBankDto.account,
+    };
+    member.save();
+    return 'success';
+  }
+
+  @ApiBody({
+    type: GetMemberSubtotalsDto,
+  })
+  @ApiOperation({ summary: '用户统计信息', description: '用户统计信息' })
+  @Post('totals')
+  async totals(@Body() getMemberSubtotalsDto: GetMemberSubtotalsDto) {
+    if (getMemberSubtotalsDto.token == '') {
+      throw new ApiException(
+        '登录失效，请重新登录',
+        ApiErrorCode.TOKEN_INVALID,
+      );
+    }
+    const member = await this.memberService.info(getMemberSubtotalsDto.token);
+    if (!member) {
+      throw new ApiException(
+        '登录失效，请重新登录',
+        ApiErrorCode.TOKEN_INVALID,
+      );
+    }
+    //
+    return this.memberService.totalsById(member._id);
   }
 
   @ApiBody({
