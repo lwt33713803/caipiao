@@ -48,8 +48,8 @@ export class Member extends Document {
   award: number;
   @Prop({ type: mongoose.Schema.Types.String, required: true })
   inviteCode: string;
-  @Prop({ type: mongoose.Schema.Types.Mixed, required: false })
-  parents: any;
+  @Prop({ type: mongoose.Schema.Types.String, required: false })
+  parents: string;
   @Prop({ type: mongoose.Schema.Types.Mixed, required: false })
   certs: {
     cardID: string;
@@ -60,6 +60,18 @@ export class Member extends Document {
   items: any;
   @Prop({ type: mongoose.Schema.Types.String, required: false })
   order_id: string;
+  @Prop({ type: mongoose.Schema.Types.Mixed, required: false })
+  third_accounts: any;
+
+  @Prop({ type: mongoose.Schema.Types.Mixed, required: false })
+  bank_info: any;
+
+  @Prop({
+    type: mongoose.Schema.Types.String,
+    required: false,
+    default: Math.floor(Date.now() / 1000),
+  })
+  create_at: string;
 }
 
 export const MemberSchema = SchemaFactory.createForClass(Member);

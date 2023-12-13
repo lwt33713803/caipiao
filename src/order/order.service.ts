@@ -98,6 +98,20 @@ export class OrderService {
     return await this.orderModel.findOne(query).exec();
   }
 
+  //根据token，shop_id获取订单详情
+  async getOrderDetailByToken(token: string, shop_id: string) {
+    const member = await this.memberService.info(token);
+    if (!member) {
+      throw new ApiException(
+        '登录失效，请重新登录',
+        ApiErrorCode.TOKEN_INVALID,
+      );
+    }
+    return this.orderModel
+      .findOne({ user_id: member._id, _id: shop_id })
+      .sort({ createdAt: -1 })
+      .exec();
+  }
   //根据token获取订单
   async getOrderByToken(token: string, status: string) {
     const member = await this.memberService.info(token);
@@ -131,7 +145,7 @@ export class OrderService {
       total += item['total'];
     });
 
-    this.orderModel.create({
+    return this.orderModel.create({
       deadline: Date.parse(new Date().toString()),
       order_time: Date.parse(new Date().toString()),
       money: total,

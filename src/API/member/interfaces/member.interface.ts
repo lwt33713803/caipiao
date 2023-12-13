@@ -22,5 +22,15 @@ export interface MemberInterface extends Document {
     cardName: string;
   };
   items?: any[];
-  order_id?: string; 
+  order_id?: string;
+  third_accounts: {
+    ali: string;
+    wechart: string;
+  };
+  bank_info: {
+    bank_name: string;
+    bank_open: string;
+    name: string;
+    account: string;
+  };
 }

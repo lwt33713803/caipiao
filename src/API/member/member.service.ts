@@ -19,7 +19,7 @@ export class MemberService {
   ) {}
 
   async create(registerMemberDto: RegisterMemberDto) {
-    let parents = {};
+    let parents = '';
 
     //用户名唯一验证
     const existsMember = await this.memberModel.findOne({
@@ -39,10 +39,7 @@ export class MemberService {
           ApiErrorCode.INVITE_CODE_NOT_EXISTS,
         );
 
-      parents = {
-        parent_id: existsInviteCode._id,
-        parents: existsInviteCode.parents,
-      };
+      parents = existsInviteCode._id;
     }
     //密码处理
     const inviteCode = randomString(6);
@@ -136,5 +133,25 @@ export class MemberService {
     await this.memberModel.findByIdAndUpdate(member, {
       $set: { amount: after },
     });
+  }
+
+  totalsById(member_id: string) {
+    //
+    const data = new Date();
+    data.setDate(1);
+    data.setHours(0);
+    data.setSeconds(0);
+    data.setMinutes(0);
+
+    return this.memberModel
+      .aggregate([
+        {
+          $match: {
+            parents: member_id,
+            create_at: { $get: data.getTime() },
+          },
+        },
+      ])
+      .exec();
   }
 }

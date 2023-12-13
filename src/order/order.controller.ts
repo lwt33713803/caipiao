@@ -11,6 +11,7 @@ import { ApiErrorCode } from 'src/common/enums/api-error-code.enum';
 import { MemberInterface } from 'src/API/member/interfaces/member.interface';
 import { OrderInterface } from './interfaces/order.interface';
 import { MemberWalletOperationsService } from '../API/member_wallet_operations/member_wallet_operations.service';
+import { ApiGetOrderDetailDto } from './dto/api-order-detail.dto';
 
 @ApiTags('订单管理')
 @Controller('order')
@@ -90,6 +91,18 @@ export class OrderController {
   }
 
   @ApiBody({
+    type: ApiGetOrderDetailDto,
+  })
+  @ApiOperation({ summary: '订单详情', description: '订单详情' })
+  @Post('detail')
+  detail(@Body() apiGetOrderDetailDto: ApiGetOrderDetailDto) {
+    return this.orderService.getOrderDetailByToken(
+      apiGetOrderDetailDto.token,
+      apiGetOrderDetailDto.order_id,
+    );
+  }
+
+  @ApiBody({
     type: ApiPayOrderDto,
   })
   @ApiOperation({ summary: 'app支付订单', description: 'app支付订单' })
@@ -127,7 +140,7 @@ export class OrderController {
     );
     //修改订单状态。
     order.pay_status = 1;
-    member.waitAward = member.waitShow + 1;
+    member.waitShow = member.waitShow + 1;
     member.save();
     order.save();
 

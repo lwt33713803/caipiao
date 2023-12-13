@@ -16,5 +16,6 @@ const LotteryTypesTable = MongooseModule.forFeature([
   imports: [LotteryTypesTable, LogModule],
   controllers: [LotteryTypesController],
   providers: [LotteryTypesService],
+  exports: [LotteryTypesService],
 })
 export class LotteryTypesModule {}
