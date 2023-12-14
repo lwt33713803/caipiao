@@ -94,7 +94,12 @@ export class MemberShopsService {
         ApiErrorCode.TOKEN_INVALID,
       );
     }
-    const categories = this.lotteryTypes.findOne(shopCategiriesDto.shop_id);
+    const categories = await this.lotteryTypes.findOne(
+      shopCategiriesDto.shop_id,
+    );
+    if (!categories) {
+      return [];
+    }
     return categories;
   }
 
