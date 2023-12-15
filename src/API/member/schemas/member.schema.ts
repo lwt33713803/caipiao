@@ -46,6 +46,8 @@ export class Member extends Document {
   waitAward: number;
   @Prop({ type: mongoose.Schema.Types.Number, required: false, default: 0 })
   award: number;
+  @Prop({ type: mongoose.Schema.Types.Number, required: false, default: 0 })
+  totalOrder: number;
   @Prop({ type: mongoose.Schema.Types.String, required: true })
   inviteCode: string;
   @Prop({ type: mongoose.Schema.Types.String, required: false })

@@ -31,7 +31,7 @@ export class MemberService {
     //邀请码存在验证
     if (registerMemberDto.invite_code) {
       const existsInviteCode = await this.memberModel.findOne({
-        inviteCode: registerMemberDto.invite_code,
+        inviteCode: registerMemberDto.invite_code.toUpperCase(),
       });
       if (!existsInviteCode)
         throw new ApiException(
@@ -60,7 +60,7 @@ export class MemberService {
       waitShow: 0,
       waitAward: 0,
       award: 0,
-      inviteCode: inviteCode,
+      inviteCode: inviteCode.toUpperCase(),
       parents: parents,
     } as MemberInterface;
     return this.memberModel.create(member);
@@ -107,6 +107,13 @@ export class MemberService {
   async findByPhone(phone: string) {
     const info = await this.memberModel.findOne({
       phone: phone,
+    });
+    return info;
+  }
+
+  async findChildByParendID(id: string) {
+    const info = await this.memberModel.find({
+      parents: id,
     });
     return info;
   }

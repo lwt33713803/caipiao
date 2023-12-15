@@ -17,6 +17,7 @@ export interface MemberInterface extends Document {
   award: number; //已开奖
   inviteCode: string;
   parents: any;
+  totalOrder: number; //总计投注金额
   certs: {
     cardID: string;
     cardName: string;

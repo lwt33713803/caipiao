@@ -141,6 +141,7 @@ export class OrderController {
     //修改订单状态。
     order.pay_status = 1;
     member.waitShow = member.waitShow + 1;
+    member.totalOrder += order.money;
     member.save();
     order.save();
 

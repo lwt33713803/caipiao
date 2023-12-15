@@ -16,6 +16,7 @@ import { TransferDto } from './dto/transfer.dto';
 import { BindWechartDto } from './dto/bind-wechart.dto';
 import { BindBankDto } from './dto/bind-bank.dto';
 import { GetMemberSubtotalsDto } from './dto/get-member-subtotals.dto';
+import { GetInvitedDto } from './dto/get-invited.dto';
 
 @ApiTags('APP会员管理')
 @Controller('member')
@@ -361,5 +362,31 @@ export class MemberController {
       'other',
     );
     return left_amount;
+  }
+
+  @ApiBody({
+    type: GetInvitedDto,
+  })
+  @ApiOperation({ summary: '邀请的用户', description: '邀请的用户' })
+  @Post('invited')
+  async invited(@Body() getInvitedDto: GetInvitedDto) {
+    if (getInvitedDto.token == '') {
+      throw new ApiException(
+        '登录失效，请重新登录',
+        ApiErrorCode.TOKEN_INVALID,
+      );
+    }
+    const member = await this.memberService.info(getInvitedDto.token);
+    if (!member) {
+      throw new ApiException(
+        '登录失效，请重新登录',
+        ApiErrorCode.TOKEN_INVALID,
+      );
+    }
+    const users = await this.memberService.findChildByParendID(member._id);
+    return {
+      total: users.length,
+      list: users,
+    };
   }
 }
