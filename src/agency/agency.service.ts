@@ -37,7 +37,25 @@ export class AgencyService {
     return await this.AgencyModel.find({ shop_id });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} agency`;
+  async setOpen(member_id: string, open_switch: boolean) {
+    await this.AgencyModel.findOneAndUpdate(
+      { member_id },
+      { open_switch: !open_switch },
+    );
+    return '切换成功';
+  }
+
+  async findOne(member_id: string) {
+    return await this.AgencyModel.findOne({ member_id });
+  }
+
+  async setRatio(member_id: string, ratio: string) {
+    await this.AgencyModel.findOneAndUpdate({ member_id }, { ratio });
+    return '修改成功';
+  }
+
+  async findSubordinate(member_id: string) {
+    const data = await this.AgencyModel.findOne({ member_id });
+    return data.subordinate;
   }
 }

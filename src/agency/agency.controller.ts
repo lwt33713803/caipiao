@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { AgencyService } from './agency.service';
 import { CreateAgencyDto } from './dto/create-agency.dto';
@@ -33,8 +34,41 @@ export class AgencyController {
     return this.agencyService.getList(shop_id);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.agencyService.findOne(+id);
+  @ApiOperation({ summary: '列表开关', description: '列表开关' })
+  @Get('switch')
+  setOpen(
+    @Query('member_id') member_id: string,
+    @Query('open_switch') open_switch: boolean,
+  ) {
+    return this.agencyService.setOpen(member_id, open_switch);
+  }
+
+  @ApiOperation({ summary: '某个代理', description: '某个代理详情' })
+  @Get('item/:member_id')
+  findItem(@Param('member_id') member_id: string) {
+    return this.agencyService.findOne(member_id);
+  }
+
+  @ApiOperation({ summary: '修改佣金', description: '修改佣金比例' })
+  @Get('set-ratio')
+  setRatio(
+    @Query('member_id') member_id: string,
+    @Query('ratio') ratio: string,
+  ) {
+    return this.agencyService.setRatio(member_id, ratio);
+  }
+
+  @ApiOperation({ summary: '下级管理列表', description: '下级管理列表' })
+  @Get('find-subordinate')
+  findSubordinate(
+    @Query('member_id') member_id: string,
+    @Query('type') type: string,
+    @Query('start_date') start_date: string,
+    @Query('end_date') end_date: string,
+  ) {
+    console.log('类型 type ==>', type);
+    console.log('开始时间 ==>', start_date);
+    console.log('结束时间 ==>', end_date);
+    return this.agencyService.findSubordinate(member_id);
   }
 }

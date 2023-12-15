@@ -20,12 +20,12 @@ export class Agency extends Document {
   @Prop({ type: mongoose.Schema.Types.Date, default: new Date() })
   create_time: Date;
   @Prop({ type: mongoose.Schema.Types.Boolean, required: false, default: true })
-  open_swithc: boolean;
+  open_switch: boolean;
   @Prop({ type: mongoose.Schema.Types.String, required: false, default: '' })
   mins: String;
   @Prop({ type: mongoose.Schema.Types.String, required: false, default: '' })
   total: String;
-  @Prop({ type: mongoose.Schema.Types.String, required: false, default: '' })
+  @Prop({ type: mongoose.Schema.Types.String, required: false, default: '1' })
   ratio: String;
   @Prop({
     type: mongoose.Schema.Types.Mixed,
