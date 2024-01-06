@@ -25,8 +25,8 @@ import { OssModule } from './oss/oss.module';
 import { MemberShopsModule } from './API/member_shops/member_shops.module';
 import { MemberFeedbackModule } from './API/member-feedback/member-feedback.module';
 import { MemberChargeModule } from './API/member-charge/member-charge.module';
-import { MemberService } from './API/member/member.service';
-import { MemberWalletOperationsService } from './API/member_wallet_operations/member_wallet_operations.service';
+// import { MemberService } from './API/member/member.service';
+// import { MemberWalletOperationsService } from './API/member_wallet_operations/member_wallet_operations.service';
 import { MemberWithdrawModule } from './API/member-withdraw/member-withdraw.module';
 import { FollowModule } from './API/follow/follow.module';
 import { AgencyModule } from './agency/agency.module';
@@ -34,7 +34,7 @@ import { AgencyModule } from './agency/agency.module';
 @Module({
   imports: [
     MongooseModule.forRoot(
-      'mongodb://mongolcz001:mongopwd001%23%23%23@47.96.71.44:10002/?authMechanism=DEFAULT',
+      'mongodb://mongolcz001:mongopwd001%23%23%23@3.25.226.3:10002/?authMechanism=DEFAULT',
       // 'mongodb://localhost:27017',
     ),
     ScheduleModule.forRoot(),
