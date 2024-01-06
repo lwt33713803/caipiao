@@ -34,7 +34,7 @@ import { AgencyModule } from './agency/agency.module';
 @Module({
   imports: [
     MongooseModule.forRoot(
-      'mongodb://mongolcz001:mongopwd001%23%23%23@3.25.226.3:10002/?authMechanism=DEFAULT',
+      'mongodb://cp-mongo/test',
       // 'mongodb://localhost:27017',
     ),
     ScheduleModule.forRoot(),
