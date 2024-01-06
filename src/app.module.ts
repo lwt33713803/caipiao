@@ -33,10 +33,7 @@ import { AgencyModule } from './agency/agency.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(
-      'mongodb://cp-mongo/test',
-      // 'mongodb://localhost:27017',
-    ),
+    MongooseModule.forRoot('mongodb://cp-mongo/test'),
     ScheduleModule.forRoot(),
     ProductModule,
     CategoryModule,
