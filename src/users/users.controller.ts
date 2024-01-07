@@ -12,12 +12,17 @@ import {
   Param,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateStaffDto, CreateUserDto } from './dto/create-user.dto';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  CreateStaffDto,
+  CreateUserDto,
+  AdminListDto,
+} from './dto/create-user.dto';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { LogService } from '../log/log.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
 import mongoose from 'mongoose';
+import { ShopsService } from '../shops/shops.service';
 
 @ApiTags('用户管理接口')
 @Controller('users')
@@ -28,6 +33,9 @@ export class UsersController {
   @Inject(LogService)
   private readonly logService: LogService;
 
+  @Inject(ShopsService)
+  private readonly shopsService: ShopsService;
+
   @Post('register')
   register(@Body() createUserDto: CreateUserDto) {
     const token = this.usersService.createToken();
@@ -35,7 +43,7 @@ export class UsersController {
     createUserDto['token'] = token;
     createUserDto['shop_id'] = shop_id;
     createUserDto['state'] = '启用';
-    createUserDto['audit'] = false;
+    createUserDto['audit'] = 0;
     return this.usersService.create(createUserDto);
   }
 
@@ -75,27 +83,38 @@ export class UsersController {
 
   @Post('login')
   async login(@Body() createUserDto: CreateUserDto, @Ip() ip: string) {
-    const shops = await this.usersService.getShopsByName(createUserDto);
-    if (!shops) {
+    const users: any = await this.usersService.getShopsByName(createUserDto);
+    if (!users) {
       throw new HttpException('请输入正确的账户和密码', HttpStatus.BAD_REQUEST);
     }
-    if (!shops.audit) {
+    if (users.audit === 0) {
       throw new HttpException('账号审核未通过', HttpStatus.BAD_REQUEST);
+    }
+    if (users.audit === 2) {
+      throw new HttpException(
+        '该账号已冻结，请联系客服',
+        HttpStatus.BAD_REQUEST,
+      );
     }
     //生成token
     const token = this.usersService.createToken();
     //记录登录日志
-    this.logService.loginSuccessLog(shops, ip, createUserDto);
+    this.logService.loginSuccessLog(users, ip, createUserDto);
     //存储当前token到用户信息
-    this.usersService.setTokenToUser(token, shops.id);
+    this.usersService.setTokenToUser(token, users.id);
+    
+    // 初次登录录入信息
+    const shops = await this.shopsService.myInfo(users.shops_id);
+    !shops && (this.usersService.setInfo(users));
+
     //返回信息
     return {
       token: token,
-      name: shops.name,
+      name: users.name,
       avatar: 'https://piao1994.oss-cn-beijing.aliyuncs.com/element/demo.png',
       email: 'Ronnie@123.com',
       role: ['admin'],
-      shop_id: shops.shop_id,
+      shop_id: users.shop_id,
     };
   }
 
@@ -127,7 +146,7 @@ export class UsersController {
       email: 'Ronnie@123.com',
       role: ['staff'],
       shop_id,
-      staff_name
+      staff_name,
     };
   }
 
@@ -139,5 +158,56 @@ export class UsersController {
     //存储当前token到用户信息
     this.usersService.setTokenToUser(new_token, user.id);
     return { token: new_token };
+  }
+
+  @Post('adminLogin')
+  async adminLogin(@Body() createUserDto: CreateUserDto, @Ip() ip: string) {
+    const shops: any = await this.usersService.getShopsByName(createUserDto);
+    if (!shops) {
+      throw new HttpException('请输入正确的账户和密码', HttpStatus.BAD_REQUEST);
+    }
+    if (shops.audit === 0) {
+      throw new HttpException('账号审核未通过', HttpStatus.BAD_REQUEST);
+    }
+    //生成token
+    const token = this.usersService.createToken();
+    //记录登录日志
+    this.logService.loginSuccessLog(shops, ip, createUserDto);
+    //存储当前token到用户信息
+    this.usersService.setTokenToUser(token, shops.id);
+    //返回信息
+    return {
+      token: token,
+      name: shops.name,
+      avatar: 'https://piao1994.oss-cn-beijing.aliyuncs.com/element/demo.png',
+      email: 'Ronnie@123.com',
+      role: ['admin'],
+      shop_id: shops.shop_id,
+    };
+  }
+
+  @Post('adminList')
+  getAdminList(@Body() adminListDto: AdminListDto) {
+    return this.usersService.getAdminList(adminListDto);
+  }
+
+  @Post('adminList/audit')
+  async auditAdminList(@Body() adminListDto: AdminListDto) {
+    const { shop_id, shop_name } = adminListDto;
+    return this.usersService.audit(shop_id, shop_name);
+  }
+
+  @ApiOperation({ summary: '停用', description: 'admin 停用' })
+  @Post('adminList/stop')
+  async stopAdminList(@Body() adminListDto: AdminListDto) {
+    const { shop_id } = adminListDto;
+    return this.usersService.stop(shop_id);
+  }
+
+  @ApiOperation({ summary: '解除', description: 'admin 解除停用' })
+  @Post('adminList/relieve')
+  async relieveAdminList(@Body() adminListDto: AdminListDto) {
+    const { shop_id } = adminListDto;
+    return this.usersService.relieve(shop_id);
   }
 }

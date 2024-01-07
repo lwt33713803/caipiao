@@ -33,14 +33,15 @@ export class UsersService {
     const { name, shop_id, shop_name } = createUserDto;
     const data = await this.usrsModel.findOne({ name });
     if (!data) {
-      defaultSystem['shop_id'] = shop_id;
-      defaultSystem['shop_name'] = shop_name;
-      defaultInfo['shop_id'] = shop_id;
-      defaultInfo['shop_name'] = shop_name;
+      // defaultSystem['shop_id'] = shop_id;
+      // defaultSystem['shop_name'] = shop_name;
+      // defaultInfo['shop_id'] = shop_id;
+      // defaultInfo['shop_name'] = shop_name;
       // 添加 彩种设置
-      this.lotteryTypesModule.create(defaultSystem);
+      // this.lotteryTypesModule.create(defaultSystem);
       // 添加 个人信息
-      this.ShopsModel.create(defaultInfo);
+      // this.ShopsModel.create(defaultInfo);
+
       this.usrsModel.create(createUserDto);
       return '注册成功';
     }
@@ -114,5 +115,40 @@ export class UsersService {
     return this.usrsModel.findByIdAndUpdate(id, {
       token: token,
     });
+  }
+
+  async getAdminList(adminListDto) {
+    const list = await this.usrsModel
+      .find()
+      .limit(adminListDto.page_size)
+      .skip((adminListDto.page - 1) * adminListDto.page_size);
+    const total: any = await this.usrsModel.find().count();
+    const page_count = Math.round(total / adminListDto.page_size);
+    return { list, total, page_count };
+  }
+
+  async audit(shop_id, shop_name) {
+    return this.usrsModel.updateOne(
+      { shop_id },
+      { $set: { audit: 1, shop_name } },
+    );
+  }
+
+  async stop(shop_id) {
+    return this.usrsModel.updateOne({ shop_id }, { $set: { audit: 2 } });
+  }
+  async relieve(shop_id) {
+    return this.usrsModel.updateOne({ shop_id }, { $set: { audit: 1 } });
+  }
+
+  async setInfo(info) {
+    defaultSystem['shop_id'] = info.shop_id;
+    defaultSystem['shop_name'] = info.shop_name;
+    defaultInfo['shop_id'] = info.shop_id;
+    defaultInfo['shop_name'] = info.shop_name;
+    // 添加 彩种设置 和 个人信息
+    this.lotteryTypesModule.create(defaultSystem);
+    this.ShopsModel.create(defaultInfo);
+    return;
   }
 }

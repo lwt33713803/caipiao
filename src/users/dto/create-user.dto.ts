@@ -5,11 +5,18 @@ export class CreateUserDto {
   password: string;
   shop_name?: string;
   avatar?: string;
-  audit?: boolean;
+  audit?: number;
 }
 
 export class CreateStaffDto {
   staff_name: string;
   staff_phone: string;
   staff_password: string;
+}
+
+export class AdminListDto {
+  shop_id: string;
+  page_size: number;
+  page: number;
+  shop_name: string;
 }

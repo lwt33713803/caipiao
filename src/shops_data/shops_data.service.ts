@@ -59,10 +59,10 @@ export class ShopsDataService {
     const shops_account_charges = await this.ShopsAccountModel.find({
       shop_id,
       type: 1,
-      update_time: {
-        $gte: startTime.getTime(),
-        $lte: endTime.getTime(),
-      },
+      // create_time: {
+      //   $gte: startTime.getTime(),
+      //   $lte: endTime.getTime(),
+      // },
     });
     const id_arr = [];
     await (
@@ -80,6 +80,9 @@ export class ShopsDataService {
     };
     const withdraw = await this.memberWithdraw.find(member_query);
     const charges = await this.memberCharge.find(member_query);
+    console.log('startTime.getTime()', startTime.getTime());
+    console.log('startTime.getTime()', endTime.getTime());
+    console.log('shops_charges', shops_account_charges);
     /*
      * drawBill_total 出单总计、service_total 手续费、award_total 派奖总计、withdraw_total 提现
      * charges 充值、shops_deduction 商家扣款
@@ -102,7 +105,7 @@ export class ShopsDataService {
       shops_charges,
       register_total: 0,
       buy_total: 0,
-      cooperation_total: 0
+      cooperation_total: 0,
     };
   }
 

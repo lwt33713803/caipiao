@@ -29,6 +29,7 @@ export class Recharge {
 
 export const defaultInfo = {
   shop_id: '',
+  shop_name: '',
   trust_sum: 0,
   remaining_sum: 0,
   setting: {

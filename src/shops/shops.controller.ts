@@ -1,3 +1,13 @@
+/*
+ * @Author: DESKTOP-HCPCFRE\X 752940841@qq.com
+ * @Date: 2023-11-28 00:23:22
+ * @LastEditors: DESKTOP-HCPCFRE\X 752940841@qq.com
+ * @LastEditTime: 2024-01-07 20:59:23
+ * @FilePath: \彩票API\src\shops\shops.controller.ts
+ * @Description:
+ *
+ * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved.
+ */
 import { Controller, Get, Body, Query, Post } from '@nestjs/common';
 import { ShopsService } from './shops.service';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
@@ -29,6 +39,7 @@ export class ShopsController {
   @Get('info')
   async findMyInfo(@Query('shop_id') shop_id: string) {
     const data = await this.shopsService.myInfo(shop_id);
+    console.log(`data`, data);
     if (data) {
       const {
         remaining_sum,
