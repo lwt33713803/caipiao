@@ -49,4 +49,11 @@ export class ApiCreateOrderDto extends PartialType(CreateOrderDto) {
   })
   @IsNotEmpty({ message: '请选择购买项' })
   items: any;
+
+  @ApiProperty({
+    example: 1,
+    required: false,
+    description: '倍数',
+  })
+  bei: number;
 }
