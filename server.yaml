@@ -35,6 +35,8 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: mongopwd001###
     ports:
       - "10002:27017"
+    volumes:
+      - /db:/data/db
     networks:
       lcz-net:
 
