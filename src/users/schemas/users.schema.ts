@@ -21,8 +21,8 @@ export class Users extends Document {
   shop_id: string;
   @Prop({ type: mongoose.Schema.Types.String, required: false })
   shop_name: string;
-  @Prop({ type: mongoose.Schema.Types.Boolean, required: false })
-  audit: boolean;
+  @Prop({ type: mongoose.Schema.Types.Number, required: false })
+  audit: number;
 }
 
 export const UsersSchema = SchemaFactory.createForClass(Users);
