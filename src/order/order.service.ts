@@ -11,6 +11,7 @@ import { MemberWalletOperationsService } from 'src/API/member_wallet_operations/
 import { ShopsAccount } from 'src/shops_account/schemas/shops_account.schema';
 import { Shops } from 'src/shops/schemas/shops.schema';
 import { Lottery } from 'src/lottery/schemas/lottery.schema';
+import axios from 'axios';
 
 @Injectable()
 export class OrderService {
@@ -81,7 +82,7 @@ export class OrderService {
       order_type: type,
       order_id: _id.toString(),
       user_id,
-      typeid: 2
+      typeid: 2,
     };
     await this.ShopsAccountModel.create(account_data);
     return '出票成功';
@@ -141,10 +142,36 @@ export class OrderService {
 
     let total = 0;
     //计算彩票金额
-    apiCreateOrderDto.items.map(function (item) {
-      item['total'] = item['amount'] * item['counts'];
-      total += item['total'];
-    });
+    if (apiCreateOrderDto.type == 4) {
+      //任 9 获取价格
+      total = 0;
+      const filter = [];
+      apiCreateOrderDto.items['schedule']['Matches'].forEach((item) => {
+        filter.push([...apiCreateOrderDto.items['selected'][item['MatchID']]]);
+      });
+      const response = await axios.post(
+        'http://218.86.184.44:19999/Choose9FromMany/GetPrice',
+        {
+          ChooseList: filter,
+        },
+      );
+
+      console.log(response['data']['data']);
+
+      if (response['data']['code'] != 200) {
+        throw new ApiException(
+          '登录失效，请重新登录',
+          ApiErrorCode.TOKEN_INVALID,
+        );
+      }
+
+      total = response['data']['data']['price'] ?? 0;
+    } else if (apiCreateOrderDto.type == 7) {
+      apiCreateOrderDto.items.map(function (item) {
+        item['total'] = item['amount'] * item['counts'];
+        total += item['total'];
+      });
+    }
 
     return this.orderModel.create({
       deadline: Date.parse(new Date().toString()),
@@ -159,6 +186,7 @@ export class OrderService {
       award_amount: 0,
       shop_id: apiCreateOrderDto.shop_id,
       expect: apiCreateOrderDto.numbers,
+      multiple: apiCreateOrderDto.bei,
     });
   }
 

@@ -49,6 +49,9 @@ export class Order extends Document {
   // 期号
   @Prop({ type: mongoose.Schema.Types.String, required: false })
   expect: string;
+  // 倍数
+  @Prop({ type: mongoose.Schema.Types.Number, required: false, default: 1 })
+  multiple: number;
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);
