@@ -52,5 +52,17 @@ services:
       lcz-net:
     command: [nginx-debug, '-g', 'daemon off;']
 
+
+  cp-admin-manager:
+   build:
+      context: ./backend-management/
+    container_name: cp-adimn-manager
+    restart: always
+    ports:
+      - "10004:80"
+    networks:
+      lcz-net:
+    command: [nginx-debug, '-g', 'daemon off;']
+
 networks:
     lcz-net:
