@@ -54,7 +54,7 @@ services:
 
 
   cp-admin-manager:
-   build:
+    build:
       context: ./backend-management/
     container_name: cp-adimn-manager
     restart: always
