@@ -1,6 +1,6 @@
 export class AdminCreatetDto {
   name: string;
-  state: number;
+  state: string;
   shop_id: string;
   password: string;
   shop_name?: string;
