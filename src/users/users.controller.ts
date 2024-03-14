@@ -23,6 +23,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
 import mongoose from 'mongoose';
 import { ShopsService } from '../shops/shops.service';
+import { AdminCreatetDto } from './dto/admin-create.dto';
 
 @ApiTags('用户管理接口')
 @Controller('users')
@@ -102,10 +103,10 @@ export class UsersController {
     this.logService.loginSuccessLog(users, ip, createUserDto);
     //存储当前token到用户信息
     this.usersService.setTokenToUser(token, users.id);
-    
+
     // 初次登录录入信息
     const shops = await this.shopsService.myInfo(users.shops_id);
-    !shops && (this.usersService.setInfo(users));
+    !shops && this.usersService.setInfo(users);
 
     //返回信息
     return {
@@ -189,6 +190,16 @@ export class UsersController {
   @Post('adminList')
   getAdminList(@Body() adminListDto: AdminListDto) {
     return this.usersService.getAdminList(adminListDto);
+  }
+
+  @Post('create')
+  create(@Body() dto: AdminCreatetDto) {
+    const token = this.usersService.createToken();
+    const shop_id = new mongoose.Types.ObjectId().toString();
+    dto.token = token;
+    dto.shop_id = shop_id;
+    dto.audit = 0;
+    return this.usersService.create(dto);
   }
 
   @Post('adminList/audit')

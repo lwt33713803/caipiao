@@ -30,6 +30,9 @@ import { MemberChargeModule } from './API/member-charge/member-charge.module';
 import { MemberWithdrawModule } from './API/member-withdraw/member-withdraw.module';
 import { FollowModule } from './API/follow/follow.module';
 import { AgencyModule } from './agency/agency.module';
+import { StoreSubtotalModule } from './store_subtotal/store_subtotal.module';
+import { SellerSubtotalModule } from './seller_subtotal/seller_subtotal.module';
+import { GroupsSubtotalModule } from './groups_subtotal/groups_subtotal.module';
 
 @Module({
   imports: [
@@ -60,6 +63,9 @@ import { AgencyModule } from './agency/agency.module';
     MemberWithdrawModule,
     FollowModule,
     AgencyModule,
+    StoreSubtotalModule,
+    SellerSubtotalModule,
+    GroupsSubtotalModule,
   ],
   controllers: [AppController],
   providers: [AppService],

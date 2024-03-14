@@ -1,6 +1,6 @@
 export class CreateUserDto {
   name: string;
-  state: string;
+  state: number;
   shop_id: string;
   password: string;
   shop_name?: string;
